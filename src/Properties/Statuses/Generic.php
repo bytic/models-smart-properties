@@ -3,7 +3,7 @@
 namespace ByTIC\Records\SmartProperties\Properties\Statuses;
 
 use ByTIC\Records\SmartProperties\Properties\AbstractProperty\Generic as GenericProperty;
-use ByTIC\Records\SmartProperties\RecordsTraits\HasStatus\RecordsTrait;
+use ByTIC\Common\Records\Traits\HasStatus\RecordsTrait;
 
 /**
  * Class Generic

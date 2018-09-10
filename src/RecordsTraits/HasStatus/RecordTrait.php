@@ -2,7 +2,7 @@
 
 namespace ByTIC\Records\SmartProperties\RecordsTraits\HasStatus;
 
-use ByTIC\Records\SmartProperties\Properties\Statuses\Generic;
+use ByTIC\Common\Records\Properties\Statuses\Generic;
 use ByTIC\Records\SmartProperties\RecordsTraits\HasSmartProperties\RecordTrait as HasSmartPropertiesRecord;
 use Nip\Records\RecordManager;
 

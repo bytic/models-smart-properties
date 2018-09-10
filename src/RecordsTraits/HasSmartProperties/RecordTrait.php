@@ -2,8 +2,8 @@
 
 namespace ByTIC\Records\SmartProperties\RecordsTraits\HasSmartProperties;
 
-use ByTIC\Records\SmartProperties\Properties\AbstractProperty\Generic as PropertyValue;
-use ByTIC\Records\SmartProperties\Properties\Definitions\Definition;
+use ByTIC\Common\Records\Properties\AbstractProperty\Generic as PropertyValue;
+use ByTIC\Common\Records\Properties\Definitions\Definition;
 use Nip\Records\RecordManager;
 
 /**

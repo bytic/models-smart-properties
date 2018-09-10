@@ -2,7 +2,7 @@
 
 namespace ByTIC\Records\SmartProperties\RecordsTraits\HasStatus;
 
-use ByTIC\Records\SmartProperties\Properties\Statuses\Generic as GenericStatus;
+use ByTIC\Common\Records\Properties\Statuses\Generic as GenericStatus;
 use Exception;
 
 /**

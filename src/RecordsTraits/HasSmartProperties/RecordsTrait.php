@@ -2,8 +2,8 @@
 
 namespace ByTIC\Records\SmartProperties\RecordsTraits\HasSmartProperties;
 
-use ByTIC\Records\SmartProperties\Properties\AbstractProperty\Generic as PropertyValue;
-use ByTIC\Records\SmartProperties\Properties\Definitions\Definition;
+use ByTIC\Common\Records\Properties\AbstractProperty\Generic as PropertyValue;
+use ByTIC\Common\Records\Properties\Definitions\Definition;
 use Exception;
 
 /**
@@ -81,7 +81,7 @@ trait RecordsTrait
     /**
      * @param $name
      * @param $field
-     * @return \ByTIC\Records\SmartProperties\Properties\AbstractProperty\Generic[]|null
+     * @return \ByTIC\Common\Records\Properties\AbstractProperty\Generic[]|null
      * @throws Exception
      */
     public function getSmartPropertyValues($name, $field)
