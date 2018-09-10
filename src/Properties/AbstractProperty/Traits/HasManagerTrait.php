@@ -1,6 +1,6 @@
 <?php
 
-namespace ByTIC\Records\SmartProperties\Properties\AbstractProperty\Traits;
+namespace ByTIC\Models\SmartProperties\Properties\AbstractProperty\Traits;
 
 use ByTIC\Common\Records\Traits\I18n\RecordsTrait as RecordsTranslated;
 use ByTIC\Common\Records\Traits\AbstractTrait\RecordsTrait;
@@ -9,7 +9,7 @@ use Nip\Records\RecordManager as Records;
 
 /**
  * Trait HasManagerTrait
- * @package ByTIC\Records\SmartProperties\Properties\AbstractProperty\Traits
+ * @package ByTIC\Models\SmartProperties\Properties\AbstractProperty\Traits
  */
 trait HasManagerTrait
 {

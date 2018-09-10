@@ -1,18 +1,18 @@
 <?php
 
-namespace ByTIC\Records\SmartProperties\RecordsTraits\HasSmartProperties;
+namespace ByTIC\Models\SmartProperties\RecordsTraits\HasSmartProperties;
 
-use ByTIC\Common\Records\Properties\AbstractProperty\Generic as PropertyValue;
-use ByTIC\Common\Records\Properties\Definitions\Definition;
+use ByTIC\Models\SmartProperties\Properties\AbstractProperty\Generic as PropertyValue;
+use ByTIC\Models\SmartProperties\Properties\Definitions\Definition;
 use Exception;
 
 /**
  * Class RecordsTrait
- * @package ByTIC\Records\SmartProperties\RecordsTraits\HasStatus
+ * @package ByTIC\Models\SmartProperties\RecordsTraits\HasStatus
  */
 trait RecordsTrait
 {
-    use \ByTIC\Records\SmartProperties\RecordsTraits\AbstractTrait\RecordsTrait;
+    use \ByTIC\Models\SmartProperties\RecordsTraits\AbstractTrait\RecordsTrait;
 
     protected $smartPropertiesDefinitions = null;
 
@@ -81,7 +81,7 @@ trait RecordsTrait
     /**
      * @param $name
      * @param $field
-     * @return \ByTIC\Common\Records\Properties\AbstractProperty\Generic[]|null
+     * @return \ByTIC\Models\SmartProperties\Properties\AbstractProperty\Generic[]|null
      * @throws Exception
      */
     public function getSmartPropertyValues($name, $field)

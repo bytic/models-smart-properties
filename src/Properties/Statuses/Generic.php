@@ -1,8 +1,8 @@
 <?php
 
-namespace ByTIC\Records\SmartProperties\Properties\Statuses;
+namespace ByTIC\Models\SmartProperties\Properties\Statuses;
 
-use ByTIC\Records\SmartProperties\Properties\AbstractProperty\Generic as GenericProperty;
+use ByTIC\Models\SmartProperties\Properties\AbstractProperty\Generic as GenericProperty;
 use ByTIC\Common\Records\Traits\HasStatus\RecordsTrait;
 
 /**

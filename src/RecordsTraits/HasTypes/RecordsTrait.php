@@ -1,8 +1,8 @@
 <?php
 
-namespace ByTIC\Records\SmartProperties\RecordsTraits\HasTypes;
+namespace ByTIC\Models\SmartProperties\RecordsTraits\HasTypes;
 
-use ByTIC\Common\Records\Properties\Types\Generic as GenericType;
+use ByTIC\Models\SmartProperties\Properties\Types\Generic as GenericType;
 use League\Flysystem\Adapter\Local as LocalAdapter;
 use Nip\Logger\Exception;
 use function inflector;
@@ -10,11 +10,11 @@ use function inflector;
 /**
  * Class RecordsTrait
  *
- * @package ByTIC\Records\SmartProperties\RecordsTraits\HasTypes
+ * @package ByTIC\Models\SmartProperties\RecordsTraits\HasTypes
  */
 trait RecordsTrait
 {
-    use \ByTIC\Records\SmartProperties\RecordsTraits\AbstractTrait\RecordsTrait;
+    use \ByTIC\Models\SmartProperties\RecordsTraits\AbstractTrait\RecordsTrait;
 
     /**
      * Type array

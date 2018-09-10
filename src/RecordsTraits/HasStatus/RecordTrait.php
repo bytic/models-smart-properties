@@ -1,14 +1,14 @@
 <?php
 
-namespace ByTIC\Records\SmartProperties\RecordsTraits\HasStatus;
+namespace ByTIC\Models\SmartProperties\RecordsTraits\HasStatus;
 
-use ByTIC\Common\Records\Properties\Statuses\Generic;
-use ByTIC\Records\SmartProperties\RecordsTraits\HasSmartProperties\RecordTrait as HasSmartPropertiesRecord;
+use ByTIC\Models\SmartProperties\Properties\Statuses\Generic;
+use ByTIC\Models\SmartProperties\RecordsTraits\HasSmartProperties\RecordTrait as HasSmartPropertiesRecord;
 use Nip\Records\RecordManager;
 
 /**
  * Class RecordTrait
- * @package ByTIC\Records\SmartProperties\RecordsTraits\HasStatus
+ * @package ByTIC\Models\SmartProperties\RecordsTraits\HasStatus
  *
  * @property string $status
  * @method RecordManager|RecordsTrait getManager()
@@ -16,7 +16,7 @@ use Nip\Records\RecordManager;
  */
 trait RecordTrait
 {
-    use \ByTIC\Records\SmartProperties\RecordsTraits\AbstractTrait\RecordTrait;
+    use \ByTIC\Models\SmartProperties\RecordsTraits\AbstractTrait\RecordTrait;
     use HasSmartPropertiesRecord;
 
     /**

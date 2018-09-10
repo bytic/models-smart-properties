@@ -1,14 +1,14 @@
 <?php
 
-namespace ByTIC\Records\SmartProperties\Properties\AbstractProperty;
+namespace ByTIC\Models\SmartProperties\Properties\AbstractProperty;
 
-use ByTIC\Records\SmartProperties\Properties\AbstractProperty\Traits\HasManagerTrait;
+use ByTIC\Models\SmartProperties\Properties\AbstractProperty\Traits\HasManagerTrait;
 use Nip\Records\Record as Record;
 use ReflectionClass;
 
 /**
  * Class Generic
- * @package ByTIC\Records\SmartProperties\Properties\AbstractProperty
+ * @package ByTIC\Models\SmartProperties\Properties\AbstractProperty
  */
 abstract class Generic
 {

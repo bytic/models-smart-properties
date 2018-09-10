@@ -1,6 +1,6 @@
 <?php
 
-namespace ByTIC\Records\SmartProperties\RecordsTraits\AbstractTrait;
+namespace ByTIC\Models\SmartProperties\RecordsTraits\AbstractTrait;
 
 use Nip\Database\Query\AbstractQuery;
 use Nip\Database\Query\Select;
@@ -8,7 +8,7 @@ use Nip\Records\Record;
 
 /**
  * Class RecordsTrait
- * @package ByTIC\Records\SmartProperties\RecordsTraits\AbstractTrait
+ * @package ByTIC\Models\SmartProperties\RecordsTraits\AbstractTrait
  */
 trait RecordsTrait
 {

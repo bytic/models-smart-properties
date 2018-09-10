@@ -1,8 +1,8 @@
 <?php
 
-namespace ByTIC\Records\SmartProperties\RecordsTraits\HasTypes;
+namespace ByTIC\Models\SmartProperties\RecordsTraits\HasTypes;
 
-use ByTIC\Common\Records\Properties\Types\Generic as GenericType;
+use ByTIC\Models\SmartProperties\Properties\Types\Generic as GenericType;
 
 /**
  * Class RecordTrait
@@ -11,11 +11,11 @@ use ByTIC\Common\Records\Properties\Types\Generic as GenericType;
  *
  * @method RecordsTrait getManager
  *
- * @package ByTIC\Records\SmartProperties\RecordsTraits\HasTypes
+ * @package ByTIC\Models\SmartProperties\RecordsTraits\HasTypes
  */
 trait RecordTrait
 {
-    use \ByTIC\Records\SmartProperties\RecordsTraits\AbstractTrait\RecordTrait;
+    use \ByTIC\Models\SmartProperties\RecordsTraits\AbstractTrait\RecordTrait;
 
     /**
      * @var GenericType

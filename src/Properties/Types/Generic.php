@@ -1,8 +1,8 @@
 <?php
 
-namespace ByTIC\Records\SmartProperties\Properties\Types;
+namespace ByTIC\Models\SmartProperties\Properties\Types;
 
-use ByTIC\Records\SmartProperties\Properties\AbstractProperty\Generic as GenericProperty;
+use ByTIC\Models\SmartProperties\Properties\AbstractProperty\Generic as GenericProperty;
 use ReflectionClass;
 
 /**

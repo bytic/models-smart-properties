@@ -1,13 +1,13 @@
 <?php
 
-namespace ByTIC\Records\SmartProperties\RecordsTraits\AbstractTrait;
+namespace ByTIC\Models\SmartProperties\RecordsTraits\AbstractTrait;
 
 use Nip\Records\AbstractModels\RecordManager;
 use Nip_Registry;
 
 /**
  * Class RecordTrait
- * @package ByTIC\Records\SmartProperties\RecordsTraits\AbstractTrait
+ * @package ByTIC\Models\SmartProperties\RecordsTraits\AbstractTrait
  *
  * @property int $id
  *

@@ -1,18 +1,18 @@
 <?php
 
-namespace ByTIC\Records\SmartProperties\RecordsTraits\HasStatus;
+namespace ByTIC\Models\SmartProperties\RecordsTraits\HasStatus;
 
-use ByTIC\Common\Records\Properties\Statuses\Generic as GenericStatus;
+use ByTIC\Models\SmartProperties\Properties\Statuses\Generic as GenericStatus;
 use Exception;
 
 /**
  * Class RecordsTrait
- * @package ByTIC\Records\SmartProperties\RecordsTraits\HasStatus
+ * @package ByTIC\Models\SmartProperties\RecordsTraits\HasStatus
  */
 trait RecordsTrait
 {
-    use \ByTIC\Records\SmartProperties\RecordsTraits\AbstractTrait\RecordsTrait;
-    use \ByTIC\Records\SmartProperties\RecordsTraits\HasSmartProperties\RecordsTrait;
+    use \ByTIC\Models\SmartProperties\RecordsTraits\AbstractTrait\RecordsTrait;
+    use \ByTIC\Models\SmartProperties\RecordsTraits\HasSmartProperties\RecordsTrait;
 
     /**
      * @param $name

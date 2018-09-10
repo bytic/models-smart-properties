@@ -1,8 +1,8 @@
 <?php
 
-namespace ByTIC\Records\SmartProperties\Properties\Definitions;
+namespace ByTIC\Models\SmartProperties\Properties\Definitions;
 
-use ByTIC\Records\SmartProperties\Properties\AbstractProperty\Generic as Property;
+use ByTIC\Models\SmartProperties\Properties\AbstractProperty\Generic as Property;
 use ByTIC\Common\Records\Traits\HasSmartProperties\RecordsTrait;
 use Exception;
 use Nip\Records\RecordManager;
@@ -10,7 +10,7 @@ use Nip_File_System as FileSystem;
 
 /**
  * Class Definition
- * @package ByTIC\Records\SmartProperties\Properties\Definitions
+ * @package ByTIC\Models\SmartProperties\Properties\Definitions
  */
 class Definition
 {
