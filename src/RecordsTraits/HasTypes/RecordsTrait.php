@@ -4,7 +4,7 @@ namespace ByTIC\Models\SmartProperties\RecordsTraits\HasTypes;
 
 use ByTIC\Models\SmartProperties\Properties\Types\Generic as GenericType;
 use League\Flysystem\Adapter\Local as LocalAdapter;
-use Nip\Logger\Exception;
+use Exception;
 use function inflector;
 
 /**
@@ -82,7 +82,6 @@ trait RecordsTrait
 
     /**
      * Generate array of type names
-     *
      * @return array
      */
     protected function generateTypesNames()
@@ -108,9 +107,7 @@ trait RecordsTrait
 
     /**
      * Generate the type name from file path
-     *
      * @param string $path
-     *
      * @return mixed
      */
     protected function generateTypeNameFromPath($path)
@@ -172,7 +169,7 @@ trait RecordsTrait
     {
         $type = $type ? $type : $this->getDefaultType();
 
-        return $this->getTypeNamespace() . inflector()->classify($type);
+        return $this->getTypeNamespace().inflector()->classify($type);
     }
 
     /**
@@ -196,7 +193,7 @@ trait RecordsTrait
      */
     public function getTypeNamespace()
     {
-        return $this->getModelNamespace() . 'Types\\';
+        return $this->getModelNamespace().'Types\\';
     }
 
     /**
@@ -207,22 +204,24 @@ trait RecordsTrait
     public function getType($type = null)
     {
         $this->checkInitTypes();
+        $type = inflector()->unclassify($type);
 
         if (isset($this->types[$type])) {
             return $this->types[$type];
         }
 
-        throw new Exception("Invalid type {$type} in [" . $this->getTable() . "]");
+        throw new Exception("Invalid type {$type} in [".$this->getTable()."]");
     }
 
     /**
      * @return string
+     * @throws \ReflectionException
      */
     public function getTypesDirectory()
     {
         $rClass = new \ReflectionClass(get_class($this));
         $dir = dirname($rClass->getFileName());
 
-        return $dir . DIRECTORY_SEPARATOR . 'Types';
+        return $dir.DIRECTORY_SEPARATOR.'Types';
     }
 }

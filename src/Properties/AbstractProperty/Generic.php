@@ -3,6 +3,7 @@
 namespace ByTIC\Models\SmartProperties\Properties\AbstractProperty;
 
 use ByTIC\Models\SmartProperties\Properties\AbstractProperty\Traits\HasManagerTrait;
+use ByTIC\Models\SmartProperties\Properties\AbstractProperty\Traits\HasNameTrait;
 use Nip\Records\Record as Record;
 use ReflectionClass;
 
@@ -13,8 +14,7 @@ use ReflectionClass;
 abstract class Generic
 {
     use HasManagerTrait;
-
-    protected $name = null;
+    use HasNameTrait;
 
     protected $label = null;
 
@@ -108,43 +108,6 @@ abstract class Generic
      * @return string
      */
     abstract protected function getLabelSlug();
-
-    /**
-     * @return string
-     */
-    public function getName()
-    {
-        if ($this->name == null) {
-            $this->initName();
-        }
-
-        return $this->name;
-    }
-
-    public function initName()
-    {
-        $this->name = $this->generateName();
-    }
-
-    /**
-     * @return string
-     */
-    public function generateName()
-    {
-        $name = $this->generateNameFromClass();
-        $name = inflector()->unclassify($name);
-
-        return $name;
-    }
-
-    /**
-     * @return string
-     * @throws \ReflectionException
-     */
-    protected function generateNameFromClass()
-    {
-        return (new ReflectionClass($this))->getShortName();
-    }
 
     /**
      * @return boolean
