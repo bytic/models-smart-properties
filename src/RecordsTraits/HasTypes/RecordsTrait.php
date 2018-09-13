@@ -204,7 +204,9 @@ trait RecordsTrait
     public function getType($type = null)
     {
         $this->checkInitTypes();
-        $type = inflector()->unclassify($type);
+        if ($type !== strtolower($type)) {
+            $type = inflector()->unclassify($type);
+        }
 
         if (isset($this->types[$type])) {
             return $this->types[$type];
