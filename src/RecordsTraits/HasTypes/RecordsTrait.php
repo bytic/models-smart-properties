@@ -169,7 +169,7 @@ trait RecordsTrait
     {
         $type = $type ? $type : $this->getDefaultType();
 
-        return $this->getTypeNamespace().inflector()->classify($type);
+        return $this->getTypeNamespace() . inflector()->classify($type);
     }
 
     /**
@@ -193,7 +193,7 @@ trait RecordsTrait
      */
     public function getTypeNamespace()
     {
-        return $this->getModelNamespace().'Types\\';
+        return $this->getModelNamespace() . 'Types\\';
     }
 
     /**
@@ -212,18 +212,24 @@ trait RecordsTrait
             return $this->types[$type];
         }
 
-        throw new Exception("Invalid type {$type} in [".$this->getTable()."]");
+        throw new Exception(
+            "Invalid type {$type} in [" . $this->getTable() . "]."
+            . " Valid Options [" . print_r(array_keys($this->types), true) . "]"
+        );
     }
 
     /**
      * @return string
-     * @throws \ReflectionException
      */
     public function getTypesDirectory()
     {
-        $rClass = new \ReflectionClass(get_class($this));
+        try {
+            $rClass = new \ReflectionClass(get_class($this));
+        } catch (\ReflectionException $exception) {
+            return null;
+        }
         $dir = dirname($rClass->getFileName());
 
-        return $dir.DIRECTORY_SEPARATOR.'Types';
+        return $dir . DIRECTORY_SEPARATOR . 'Types';
     }
 }
