@@ -24,7 +24,7 @@
   },
   "require": {
     "php": "^7.0",
-    "bytic/orm": "^1.0"
+    "bytic/orm": "^0.9"
   },
   "require-dev": {
     "phpunit/phpunit": "^7.2",
