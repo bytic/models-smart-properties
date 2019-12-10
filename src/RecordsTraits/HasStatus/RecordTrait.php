@@ -2,7 +2,7 @@
 
 namespace ByTIC\Models\SmartProperties\RecordsTraits\HasStatus;
 
-use ByTIC\Models\SmartProperties\Properties\Statuses\Generic;
+use ByTIC\Models\SmartProperties\Properties\AbstractProperty\Generic;
 use ByTIC\Models\SmartProperties\RecordsTraits\HasSmartProperties\RecordTrait as HasSmartPropertiesRecord;
 use Nip\Records\RecordManager;
 
@@ -28,11 +28,21 @@ trait RecordTrait
     }
 
     /**
+     * @param $value
+     */
+    public function setStatus($value)
+    {
+        /** @noinspection PhpUnhandledExceptionInspection */
+        $this->setSmartProperty('Status', $value);
+    }
+
+    /**
      * @param $status
      * @return Generic
      */
     public function getNewStatus($status)
     {
+        /** @noinspection PhpUnhandledExceptionInspection */
         return $this->getNewSmartPropertyFromValue('Status', $status);
     }
 
@@ -42,6 +52,7 @@ trait RecordTrait
      */
     public function updateStatus($status = false)
     {
+        /** @noinspection PhpUnhandledExceptionInspection */
         return $this->updateSmartProperty('Status', $status);
     }
 }

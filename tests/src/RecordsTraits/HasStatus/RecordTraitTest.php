@@ -23,6 +23,9 @@ class RecordTraitTest extends AbstractTest
         $status = $this->object->getStatus();
         self::assertInstanceOf(Generic::class, $status);
         self::assertSame('allocated', $status->getName());
+
+        $data = $this->object->toArray();
+        self::assertSame('allocated', $data['status']);
     }
 
     public function testGetStatusWithValue()
@@ -32,6 +35,9 @@ class RecordTraitTest extends AbstractTest
         $status = $this->object->getStatus();
         self::assertInstanceOf(Generic::class, $status);
         self::assertSame('applicant', $status->getName());
+
+        $data = $this->object->toArray();
+        self::assertSame('applicant', $data['status']);
     }
 
     protected function setUp()

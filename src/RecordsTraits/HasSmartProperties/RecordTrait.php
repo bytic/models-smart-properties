@@ -87,6 +87,7 @@ trait RecordTrait
      * @param $name
      * @param $value
      * @return PropertyValue
+     * @throws \Exception
      */
     public function getNewSmartPropertyFromValue($name, $value)
     {
@@ -98,17 +99,27 @@ trait RecordTrait
 
     /**
      * @param string $name
-     * @param PropertyValue $object
+     * @param PropertyValue|string $value
+     * @throws \Exception
      */
-    protected function setSmartProperty($name, $object)
+    protected function setSmartProperty($name, $value)
     {
-        $this->smartProperties[$name] = $object;
+        $definition = $this->getManager()->getSmartPropertyDefinition($name);
+        $field = $definition->getField();
+        if ($value instanceof PropertyValue) {
+            $this->setDataValue($field, $value->getName());
+            $this->smartProperties[$name] = $value;
+        } elseif (!empty($value)) {
+            $this->setDataValue($field, $value);
+            $this->smartProperties[$name] = $this->getNewSmartPropertyFromValue($name, $value);
+        }
     }
 
     /**
      * @param $name
      * @param $value
      * @return bool
+     * @throws \Exception
      */
     public function updateSmartProperty($name, $value)
     {

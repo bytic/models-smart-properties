@@ -83,9 +83,9 @@ trait RecordTrait
     {
         if ($type instanceof GenericType) {
             $this->typeObject = $type;
-            $this->type = $type->getName();
+            $this->setDataValue('type', $type->getName());
         } elseif (!empty($type)) {
-            $this->type = $type;
+            $this->setDataValue('type', $type);
             $this->typeObject = $this->getNewType($type);
 
             return $this;
