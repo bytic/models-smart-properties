@@ -76,21 +76,31 @@ trait RecordTrait
 
     /**
      * @param GenericType $type
-     * @return bool|RecordTrait
+     * @return bool|GenericType|RecordTrait
      * @throws \Nip\Logger\Exception
      */
     public function setType($type = null)
     {
         if ($type instanceof GenericType) {
-            $this->typeObject = $type;
-            $this->setDataValue('type', $type->getName());
-        } elseif (!empty($type)) {
-            $this->setDataValue('type', $type);
-            $this->typeObject = $this->getNewType($type);
-
-            return $this;
+            return $this->setTypeFromObject($type);
         }
+        $this->setDataValue('type', $type);
+        if (is_object($this->typeObject) && $this->typeObject->getName() === $type) {
+            return $this->typeObject;
+        }
+        $this->typeObject = $this->getNewType($type);
 
-        return false;
+        return $this->typeObject;
+    }
+
+    /**
+     * @param $typeObject
+     * @return RecordTrait
+     */
+    public function setTypeFromObject($typeObject)
+    {
+        $this->typeObject = $typeObject;
+        $this->setDataValue('type', $typeObject->getName());
+        return $typeObject;
     }
 }

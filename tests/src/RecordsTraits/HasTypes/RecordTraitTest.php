@@ -3,9 +3,9 @@
 namespace ByTIC\Models\SmartProperties\Tests\RecordsTraits\HasTypes;
 
 use ByTIC\Models\SmartProperties\Properties\AbstractProperty\Generic;
+use ByTIC\Models\SmartProperties\Tests\AbstractTest;
 use ByTIC\Models\SmartProperties\Tests\Fixtures\RecordsTraits\HasTypes\Record;
 use ByTIC\Models\SmartProperties\Tests\Fixtures\RecordsTraits\HasTypes\Records;
-use ByTIC\Models\SmartProperties\Tests\AbstractTest;
 use ByTIC\Models\SmartProperties\Tests\Fixtures\RecordsTraits\HasTypes\Types\Individual;
 
 /**
@@ -30,6 +30,21 @@ class RecordTraitTest extends AbstractTest
         $data = $this->object->toArray();
 
         self::assertSame('individual', $data['type']);
+    }
+
+    public function test_setType_string_sameType()
+    {
+        $this->object->setType('individual');
+        $type = $this->object->getType();
+        $type->singleton = true;
+
+        self::assertInstanceOf(Individual::class, $type);
+        self::assertSame('individual', $type->getName());
+
+        $this->object->setType('individual');
+        $type = $this->object->getType();
+
+        self::assertTrue($type->singleton);
     }
 
     public function test_setType_object()
