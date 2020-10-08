@@ -13,7 +13,6 @@ use ByTIC\Common\Records\Traits\HasStatus\RecordsTrait;
  */
 abstract class Generic extends GenericProperty
 {
-
     /**
      * @var null|string
      */

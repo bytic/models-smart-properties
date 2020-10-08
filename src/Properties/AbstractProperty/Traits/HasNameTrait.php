@@ -10,7 +10,6 @@ use ReflectionClass;
  */
 trait HasNameTrait
 {
-
     protected $name = null;
 
     /**

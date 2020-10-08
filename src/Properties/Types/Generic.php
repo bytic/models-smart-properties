@@ -11,7 +11,6 @@ use ReflectionClass;
  */
 abstract class Generic extends GenericProperty
 {
-
     /**
      * @return string
      */
