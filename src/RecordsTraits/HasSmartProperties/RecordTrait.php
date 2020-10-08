@@ -75,7 +75,7 @@ trait RecordTrait
     public function getSmartPropertyValueFromDefinition($definition)
     {
         $field = $definition->getField();
-        $value = $this->{$field};
+        $value = $this->getAttributeFromArray($field);
         if ($value === null) {
             $value = $definition->getDefaultValue();
         }
