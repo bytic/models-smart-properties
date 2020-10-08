@@ -36,7 +36,7 @@ abstract class Generic
      */
     public function __get($name)
     {
-        $method = 'get'.ucfirst($name);
+        $method = 'get' . ucfirst($name);
         if (method_exists($this, $method)) {
             return $this->$method();
         }
@@ -50,10 +50,10 @@ abstract class Generic
      */
     public function getLabelHTML($short = false)
     {
-        return '<span class="'.$this->getLabelClasses().'" rel="tooltip" title="'.$this->getLabel().'"  
-        style="'.$this->getColorCSS().'">
-            '.$this->getIconHTML().'
-            '.$this->getLabel($short).'
+        return '<span class="' . $this->getLabelClasses() . '" rel="tooltip" title="' . $this->getLabel() . '"  
+        style="' . $this->getColorCSS() . '">
+            ' . $this->getIconHTML() . '
+            ' . $this->getLabel($short) . '
         </span>';
     }
 
@@ -64,7 +64,7 @@ abstract class Generic
      */
     public function getLabelClasses()
     {
-        return 'label label-'.$this->getColorClass();
+        return 'label label-' . $this->getColorClass();
     }
 
     /**
@@ -101,7 +101,7 @@ abstract class Generic
      */
     protected function generateLabel()
     {
-        return $this->getManager()->translate($this->getLabelSlug().'.'.$this->getName());
+        return $this->getManager()->translate($this->getLabelSlug() . '.' . $this->getName());
     }
 
     /**
@@ -122,7 +122,7 @@ abstract class Generic
      */
     protected function generateLabelShort()
     {
-        return $this->getManager()->translate($this->getLabelSlug().'.'.$this->getName().'.short');
+        return $this->getManager()->translate($this->getLabelSlug() . '.' . $this->getName() . '.short');
     }
 
     /**
@@ -132,10 +132,10 @@ abstract class Generic
     {
         $css = [];
         if ($this->getBGColor()) {
-            $css[] = 'background-color: '.$this->getBGColor();
+            $css[] = 'background-color: ' . $this->getBGColor();
         }
         if ($this->getFGColor()) {
-            $css[] = 'color: '.$this->getFGColor();
+            $css[] = 'color: ' . $this->getFGColor();
         }
 
         return implode(';', $css);
@@ -165,7 +165,7 @@ abstract class Generic
         $icon = $this->getIcon();
         $return = '';
         if ($icon) {
-            $return .= '<span class="glyphicon glyphicon-white '.$icon.'"></span> ';
+            $return .= '<span class="glyphicon glyphicon-white ' . $icon . '"></span> ';
         }
 
         return $return;

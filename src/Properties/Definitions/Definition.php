@@ -14,7 +14,6 @@ use Nip_File_System as FileSystem;
  */
 class Definition
 {
-
     /**
      * @var RecordManager|RecordsTrait
      */
@@ -50,10 +49,11 @@ class Definition
     public function getItem($name)
     {
         $items = $this->getItems();
-        if ( ! $this->hasItem($name)) {
+        if (! $this->hasItem($name)) {
             throw new Exception(
                 'Bad Item [' . $name . '] for smart property 
-                [' . $this->getManager()->getController() . '][' . $this->getName() . ']');
+                [' . $this->getManager()->getController() . '][' . $this->getName() . ']'
+            );
         }
 
         return $items[$name];
@@ -76,7 +76,7 @@ class Definition
         $names       = $this->getItemsNames();
         $this->items = [];
         foreach ($names as $name) {
-            if ( ! $this->isAbstractItemName($name)) {
+            if (! $this->isAbstractItemName($name)) {
                 $object                          = $this->newStatus($name);
                 $this->items[$object->getName()] = $object;
             }

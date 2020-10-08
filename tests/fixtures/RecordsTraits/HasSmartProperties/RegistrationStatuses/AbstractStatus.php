@@ -8,7 +8,6 @@ namespace ByTIC\Models\SmartProperties\Tests\Fixtures\RecordsTraits\HasSmartProp
  */
 abstract class AbstractStatus extends \ByTIC\Models\SmartProperties\Properties\Statuses\Generic
 {
-
     /**
      * @return string
      */

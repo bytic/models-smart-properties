@@ -55,7 +55,7 @@ class RecordsTraitTest extends AbstractTest
     }
 
 
-    protected function setUp() : void
+    protected function setUp(): void
     {
         parent::setUp();
         $this->object = new Records();

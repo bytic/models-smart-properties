@@ -13,7 +13,6 @@ use Nip\Records\RecordManager as Records;
  */
 trait HasManagerTrait
 {
-
     /**
      * @var null|Records|RecordsTranslated|HasTypesRecords
      */

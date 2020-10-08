@@ -14,7 +14,6 @@ use Nip_Registry;
  */
 trait RecordTrait
 {
-
     /**
      * @return RecordManager
      */

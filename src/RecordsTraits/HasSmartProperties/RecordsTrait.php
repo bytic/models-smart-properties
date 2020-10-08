@@ -50,7 +50,7 @@ trait RecordsTrait
         if ($definition) {
             return $definition->getItems();
         }
-        throw new Exception('invalid smart property ['.$name.']');
+        throw new Exception('invalid smart property [' . $name . ']');
     }
 
     /**
@@ -90,7 +90,7 @@ trait RecordsTrait
         if ($definition) {
             return $definition->getValues($field);
         }
-        throw new Exception('invalid smart property ['.$name.']');
+        throw new Exception('invalid smart property [' . $name . ']');
     }
 
     /**
@@ -105,7 +105,7 @@ trait RecordsTrait
         if ($definition) {
             return $definition->getItem($value);
         }
-        throw new Exception('invalid smart property ['.$property.']');
+        throw new Exception('invalid smart property [' . $property . ']');
     }
 
     protected function registerSmartProperties()

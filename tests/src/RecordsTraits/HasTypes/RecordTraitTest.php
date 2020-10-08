@@ -73,7 +73,7 @@ class RecordTraitTest extends AbstractTest
         self::assertSame('individual', $data['type']);
     }
 
-    protected function setUp() : void
+    protected function setUp(): void
     {
         parent::setUp();
         $this->object = new Record();
