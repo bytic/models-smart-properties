@@ -2,11 +2,12 @@
 
 namespace ByTIC\Models\SmartProperties\Properties\Definitions;
 
-use ByTIC\Models\SmartProperties\Properties\AbstractProperty\Generic as Property;
 use ByTIC\Common\Records\Traits\HasSmartProperties\RecordsTrait;
+use ByTIC\Models\SmartProperties\Properties\AbstractProperty\Generic as Property;
 use Exception;
 use Nip\Records\RecordManager;
-use Nip_File_System as FileSystem;
+use RecursiveDirectoryIterator;
+use RecursiveIteratorIterator;
 
 /**
  * Class Definition
@@ -14,6 +15,8 @@ use Nip_File_System as FileSystem;
  */
 class Definition
 {
+    use Traits\HasItemsDirectoryTrait;
+
     /**
      * @var RecordManager|RecordsTrait
      */
@@ -36,8 +39,6 @@ class Definition
 
     protected $items = null;
 
-    protected $itemsDirectory = null;
-
     protected $defaultValue = null;
 
     /**
@@ -52,7 +53,8 @@ class Definition
         if (! $this->hasItem($name)) {
             throw new Exception(
                 'Bad Item [' . $name . '] for smart property 
-                [' . $this->getManager()->getController() . '][' . $this->getName() . ']'
+                [' . $this->getManager()->getController() . '::' . $this->getName() . ']
+                [' . implode(',', array_keys($items)) . ']'
             );
         }
 
@@ -169,65 +171,21 @@ class Definition
      */
     protected function getItemsNamesFromFiles()
     {
-        $files = scandir($this->getItemsDirectory());
-        foreach ($files as $key=>&$name) {
-            if (in_array($name, ['.', '..'])) {
-                unset($files[$key]);
-            } else {
-                $name = str_replace('.php', '', $name);
+        $directory = $this->getItemsDirectory();
+        $files = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($this->getItemsDirectory()));
+        $names = [];
+        foreach ($files as $file) {
+            if ($file->isDir()) {
+                continue;
             }
+            $name = str_replace($directory, '', $file->getPathname());
+            $name = str_replace('.php', '', $name);
+            $names[] = trim($name, DIRECTORY_SEPARATOR . '\\');
         }
 
-        return $files;
+        return array_unique($names);
     }
 
-    /**
-     * @return null|string
-     */
-    public function getItemsDirectory()
-    {
-        if ($this->itemsDirectory == null) {
-            $this->initItemsDirectory();
-        }
-
-        return $this->itemsDirectory;
-    }
-
-    public function initItemsDirectory()
-    {
-        $this->itemsDirectory = $this->generateItemsDirectory();
-    }
-
-    /**
-     * @return string
-     */
-    public function generateItemsDirectory()
-    {
-        $methodName = 'get' . $this->getName() . 'ItemsDirectory';
-        if (method_exists($this->getManager(), $methodName)) {
-            return $this->getManager()->$methodName();
-        }
-
-        return $this->generateManagerDirectory() . DIRECTORY_SEPARATOR . $this->generatePropertyDirectory();
-    }
-
-    /**
-     * @return string
-     */
-    protected function generateManagerDirectory()
-    {
-        $reflector = new \ReflectionObject($this->getManager());
-
-        return dirname($reflector->getFileName());
-    }
-
-    /**
-     * @return string
-     */
-    protected function generatePropertyDirectory()
-    {
-        return $this->getLabel();
-    }
 
     /**
      * @return string
@@ -266,6 +224,9 @@ class Definition
             return true;
         }
         if (strpos($name, 'Abstract') === 0) {
+            return true;
+        }
+        if (strpos($name, '\Abstract') !== false) {
             return true;
         }
 
