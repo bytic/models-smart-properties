@@ -2,7 +2,9 @@
 
 namespace ByTIC\Models\SmartProperties\RecordsTraits\HasTypes;
 
+use ByTIC\Models\SmartProperties\Properties\Types\Generic;
 use ByTIC\Models\SmartProperties\Properties\Types\Generic as GenericType;
+use ByTIC\Models\SmartProperties\RecordsTraits\HasSmartProperties\RecordTrait as HasSmartPropertiesRecord;
 
 /**
  * Class RecordTrait
@@ -16,48 +18,24 @@ use ByTIC\Models\SmartProperties\Properties\Types\Generic as GenericType;
 trait RecordTrait
 {
     use \ByTIC\Models\SmartProperties\RecordsTraits\AbstractTrait\RecordTrait;
+    use HasSmartPropertiesRecord;
 
     /**
-     * @var GenericType
-     */
-    protected $typeObject = null;
-
-    /**
-     * @return GenericType
+     * @return \ByTIC\Models\SmartProperties\Properties\AbstractProperty\Generic|GenericType
      */
     public function getType()
     {
-        if ($this->typeObject === null) {
-            $this->initType();
-        }
-
-        return $this->typeObject;
-    }
-
-    public function initType()
-    {
-        $this->typeObject = $this->getNewType($this->getTypeValue());
+        return $this->getSmartProperty('Type');
     }
 
     /**
-     * @param $type
-     * @return mixed
-     * @throws \Nip\Logger\Exception
+     * @param $status
+     * @return \ByTIC\Models\SmartProperties\Properties\AbstractProperty\Generic|GenericType
      */
-    public function getNewType($type)
+    public function getNewType($status)
     {
-        $object = clone $this->getManager()->getType($type);
-        $object->setItem($this);
-
-        return $object;
-    }
-
-    /**
-     * @return string
-     */
-    public function getTypeValue()
-    {
-        return $this->type;
+        /** @noinspection PhpUnhandledExceptionInspection */
+        return $this->getNewSmartPropertyFromValue('Type', $status);
     }
 
     /**
@@ -75,22 +53,12 @@ trait RecordTrait
     }
 
     /**
-     * @param GenericType $type
-     * @return bool|GenericType|RecordTrait
-     * @throws \Nip\Logger\Exception
+     * @param $value
      */
-    public function setType($type = null)
+    public function setType($value)
     {
-        if ($type instanceof GenericType) {
-            return $this->setTypeFromObject($type);
-        }
-        $this->setDataValue('type', $type);
-        if (is_object($this->typeObject) && $this->typeObject->getName() === $type) {
-            return $this->typeObject;
-        }
-        $this->typeObject = $this->getNewType($type);
-
-        return $this->typeObject;
+        /** @noinspection PhpUnhandledExceptionInspection */
+        $this->setSmartProperty('Type', $value);
     }
 
     /**
@@ -99,8 +67,8 @@ trait RecordTrait
      */
     public function setTypeFromObject($typeObject)
     {
-        $this->typeObject = $typeObject;
-        $this->setDataValue('type', $typeObject->getName());
+        /** @noinspection PhpUnhandledExceptionInspection */
+        $this->setSmartProperty('Type', $typeObject);
         return $typeObject;
     }
 }

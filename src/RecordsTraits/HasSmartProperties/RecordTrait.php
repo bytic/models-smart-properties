@@ -109,7 +109,13 @@ trait RecordTrait
         if ($value instanceof PropertyValue) {
             $this->setDataValue($field, $value->getName());
             $this->smartProperties[$name] = $value;
-        } elseif (!empty($value)) {
+            return;
+        }
+        if (!empty($value)) {
+            $currentProperty = $this->getSmartProperty($name);
+            if (is_object($currentProperty) && $currentProperty->getName() === $value) {
+                return;
+            }
             $this->setDataValue($field, $value);
             $this->smartProperties[$name] = $this->getNewSmartPropertyFromValue($name, $value);
         }

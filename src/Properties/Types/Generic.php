@@ -12,6 +12,11 @@ use ReflectionClass;
 abstract class Generic extends GenericProperty
 {
     /**
+     * @var null|string
+     */
+    protected $field = 'type';
+
+    /**
      * @return string
      */
     protected function getLabelSlug()
@@ -19,19 +24,4 @@ abstract class Generic extends GenericProperty
         return 'types';
     }
 
-    /**
-     * @return string
-     * @throws \ReflectionException
-     */
-    protected function generateNameFromClass()
-    {
-        if ($this->hasManager()) {
-            $namespaceTypes = $this->getManager()->getTypeNamespace();
-            $name = (new ReflectionClass($this))->getName();
-
-            return str_replace($namespaceTypes, '', $name);
-        }
-
-        return parent::generateNameFromClass();
-    }
 }
