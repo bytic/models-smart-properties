@@ -17,7 +17,7 @@ class DefinitionTest extends AbstractTest
         $definition->setItemsDirectory(TEST_FIXTURE_PATH . '/RecordsTraits/HasTypes/Types');
 
         $names = $definition->getItemsNames();
-        self::assertIsArray( $names);
+        self::assertIsArray($names);
         self::assertCount(5, $names);
     }
 }
