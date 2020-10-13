@@ -260,7 +260,7 @@ class Definition
     public function getItemClass($type = null)
     {
         $type = $type ? $type : $this->getDefaultValue();
-        $type = str_replace(DIRECTORY_SEPARATOR,'\\', $type);
+        $type = str_replace(DIRECTORY_SEPARATOR, '\\', $type);
 
         return $this->getPropertyItemsRootNamespace() . inflector()->classify($type);
     }
