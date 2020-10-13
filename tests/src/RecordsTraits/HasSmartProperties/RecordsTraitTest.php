@@ -71,7 +71,7 @@ class RecordsTraitTest extends AbstractTest
         self::assertSame(['allocated', 'applicant'], $values);
 
         $values = $this->object->getSmartPropertyValues('RegistrationStatus', 'name');
-        self::assertSame(['free_confirmed', 'paid_confirmed', 'unpaid', 'unregistered'], $values);
+        self::assertEqualsCanonicalizing(['free_confirmed', 'paid_confirmed',  'unregistered', 'unpaid'], $values);
     }
 
     public function testGetSmartPropertyItem()

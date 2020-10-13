@@ -6,7 +6,6 @@ use ByTIC\Common\Records\Traits\HasSmartProperties\RecordsTrait;
 use ByTIC\Models\SmartProperties\Properties\AbstractProperty\Generic as Property;
 use Exception;
 use Nip\Records\RecordManager;
-use Nip\Utility\Str;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 
@@ -173,7 +172,7 @@ class Definition
     protected function getItemsNamesFromFiles()
     {
         $directory = $this->getItemsDirectory();
-        $files = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($this->getItemsDirectory()));
+        $files = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($directory));
         $names = [];
         foreach ($files as $file) {
             if ($file->isDir()) {
@@ -228,6 +227,9 @@ class Definition
             return true;
         }
         if (strpos($name, '\Abstract') !== false) {
+            return true;
+        }
+        if (strpos($name, DIRECTORY_SEPARATOR . 'Abstract') !== false) {
             return true;
         }
 
