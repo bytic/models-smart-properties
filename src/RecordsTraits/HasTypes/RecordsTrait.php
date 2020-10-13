@@ -41,14 +41,6 @@ trait RecordsTrait
     }
 
     /**
-     * @return string
-     */
-    public function getTypesDirectory()
-    {
-        return $this->getSmartPropertyDefinition('Type')->getItemsDirectory();
-    }
-
-    /**
      * @param string $name
      * @return GenericStatus
      * @throws Exception

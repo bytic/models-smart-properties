@@ -2,6 +2,8 @@
 
 namespace ByTIC\Models\SmartProperties\Properties\Definitions\Traits;
 
+use Nip\Utility\Str;
+
 /**
  * Trait HasItemsDirectoryTrait
  * @package ByTIC\Models\SmartProperties\Properties\Definitions\Traits
@@ -39,9 +41,14 @@ trait HasItemsDirectoryTrait
     /**
      * @return string
      */
-    public function generateItemsDirectory()
+    protected function generateItemsDirectory()
     {
         $methodName = 'get' . $this->getName() . 'ItemsDirectory';
+        if (method_exists($this->getManager(), $methodName)) {
+            return $this->getManager()->$methodName();
+        }
+
+        $methodName = 'get' . Str::plural($this->getName()) . 'Directory';
         if (method_exists($this->getManager(), $methodName)) {
             return $this->getManager()->$methodName();
         }

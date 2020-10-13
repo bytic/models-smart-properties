@@ -4,6 +4,7 @@ namespace ByTIC\Models\SmartProperties\Tests\Fixtures\RecordsTraits\HasTypes;
 
 use ByTIC\Models\SmartProperties\RecordsTraits\HasTypes\RecordsTrait;
 use Nip\Records\RecordManager as AbstractRecords;
+use Nip\Utility\Traits\SingletonTrait;
 
 /**
  * Class Records
@@ -12,6 +13,15 @@ use Nip\Records\RecordManager as AbstractRecords;
 class Records extends AbstractRecords
 {
     use RecordsTrait;
+    use SingletonTrait;
+
+    /**
+     * @inheritDoc
+     */
+    public function getTypesDirectory()
+    {
+        return __DIR__ . DIRECTORY_SEPARATOR . 'Types';
+    }
 
     /** @noinspection PhpMissingParentCallCommonInspection
      * @return string

@@ -32,14 +32,6 @@ trait RecordsTrait
     }
 
     /**
-     * @return null|string
-     */
-    public function getStatusesDirectory()
-    {
-        return $this->getSmartPropertyDefinition('Status')->getItemsDirectory();
-    }
-
-    /**
      * @param string $name
      * @return GenericStatus
      * @throws Exception

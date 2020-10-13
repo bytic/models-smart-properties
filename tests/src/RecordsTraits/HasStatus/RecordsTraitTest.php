@@ -24,16 +24,6 @@ class RecordsTraitTest extends AbstractTest
         self::assertCount(1, $definitions);
     }
 
-    public function testGetStatusesDirectory()
-    {
-        $directory = $this->object->getStatusesDirectory();
-
-        self::assertStringEndsWith(
-            str_replace('/', DIRECTORY_SEPARATOR, 'RecordsTraits/HasStatus/Statuses'),
-            $directory
-        );
-    }
-
     public function testGetStatuses()
     {
         $statuses = $this->object->getStatuses();

@@ -6,6 +6,7 @@ use ByTIC\Common\Records\Traits\HasSmartProperties\RecordsTrait;
 use ByTIC\Models\SmartProperties\Properties\AbstractProperty\Generic as Property;
 use Exception;
 use Nip\Records\RecordManager;
+use Nip\Utility\Str;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 
@@ -323,12 +324,18 @@ class Definition
      */
     protected function getPropertyItemsRootNamespace()
     {
+        $manager = $this->getManager();
         $method = 'get' . $this->getName() . 'ItemsRootNamespace';
-        if (method_exists($this->getManager(), $method)) {
-            return $this->getManager()->{$method}();
+        if (method_exists($manager, $method)) {
+            return $manager->{$method}();
         }
 
-        return $this->getManager()->getModelNamespace() . $this->getLabel() . '\\';
+        $method = 'get' . $this->getName() . 'Namespace';
+        if (method_exists($manager, $method)) {
+            return $manager->{$method}();
+        }
+
+        return $manager->getModelNamespace() . $this->getLabel() . '\\';
     }
 
     /**
