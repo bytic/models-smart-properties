@@ -4,9 +4,7 @@ namespace ByTIC\Models\SmartProperties\RecordsTraits\HasTypes;
 
 use ByTIC\Models\SmartProperties\Properties\Statuses\Generic as GenericStatus;
 use ByTIC\Models\SmartProperties\Properties\Types\Generic as GenericType;
-use League\Flysystem\Adapter\Local as LocalAdapter;
 use Exception;
-use function inflector;
 
 /**
  * Class RecordsTrait

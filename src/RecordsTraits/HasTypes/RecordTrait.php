@@ -7,7 +7,7 @@ use ByTIC\Models\SmartProperties\Properties\Types\Generic as GenericType;
 use ByTIC\Models\SmartProperties\RecordsTraits\HasSmartProperties\RecordTrait as HasSmartPropertiesRecord;
 
 /**
- * Class RecordTrait
+ * Trait RecordTrait
  *
  * @property $type
  *

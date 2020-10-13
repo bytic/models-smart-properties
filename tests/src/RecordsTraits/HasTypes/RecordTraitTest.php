@@ -4,7 +4,7 @@ namespace ByTIC\Models\SmartProperties\Tests\RecordsTraits\HasTypes;
 
 use ByTIC\Models\SmartProperties\Properties\AbstractProperty\Generic;
 use ByTIC\Models\SmartProperties\Tests\AbstractTest;
-use ByTIC\Models\SmartProperties\Tests\Fixtures\RecordsTraits\HasTypes\Record;
+use ByTIC\Models\SmartProperties\Tests\Fixtures\RecordsTraits\HasTypes\Record as RecordHasTypes;
 use ByTIC\Models\SmartProperties\Tests\Fixtures\RecordsTraits\HasTypes\Records;
 use ByTIC\Models\SmartProperties\Tests\Fixtures\RecordsTraits\HasTypes\Types\Individual;
 
@@ -15,7 +15,7 @@ use ByTIC\Models\SmartProperties\Tests\Fixtures\RecordsTraits\HasTypes\Types\Ind
 class RecordTraitTest extends AbstractTest
 {
     /**
-     * @var Record
+     * @var RecordHasTypes
      */
     private $object;
 
@@ -76,7 +76,7 @@ class RecordTraitTest extends AbstractTest
     protected function setUp(): void
     {
         parent::setUp();
-        $this->object = new Record();
+        $this->object = new RecordHasTypes();
 
         $manager = new Records();
         $this->object->setManager($manager);
