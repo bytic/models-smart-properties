@@ -253,4 +253,12 @@ abstract class Generic
     {
         return 'info';
     }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->getName();
+    }
 }
