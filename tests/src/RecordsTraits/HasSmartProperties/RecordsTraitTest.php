@@ -80,9 +80,20 @@ class RecordsTraitTest extends AbstractTest
         self::assertInstanceOf(Allocated::class, $status);
     }
 
+    public function test_registerSmartProperty()
+    {
+        $field = new \ByTIC\Models\SmartProperties\Tests\Fixtures\RecordsTraits\PdfLetters\Record;
+        $field->field = 'relay';
+
+        self::assertInstanceOf(
+            \ByTIC\Models\SmartProperties\Tests\Fixtures\RecordsTraits\PdfLetters\Types\Relay::class,
+            $field->getType()
+        );
+    }
+
 
     protected function setUp(): void
-    {
+    {   
         parent::setUp();
         $this->object = new Records();
     }

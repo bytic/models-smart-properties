@@ -113,10 +113,13 @@ trait RecordsTrait
     /**
      * @param $field
      */
-    protected function registerSmartProperty($field)
+    protected function registerSmartProperty($field, $name = null)
     {
         $definition = $this->newSmartPropertyDefinition();
         $definition->setField($field);
+        if ($name) {
+            $definition->setName($name);
+        }
         $this->addSmartPropertyDefinition($definition);
     }
 
