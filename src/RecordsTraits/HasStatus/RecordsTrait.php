@@ -13,36 +13,10 @@ trait RecordsTrait
 {
     use \ByTIC\Models\SmartProperties\RecordsTraits\AbstractTrait\RecordsTrait;
     use \ByTIC\Models\SmartProperties\RecordsTraits\HasSmartProperties\RecordsTrait;
-
-    /**
-     * @param $name
-     * @return array
-     */
-    public function getStatusProperty($name)
-    {
-        return $this->getSmartPropertyValues('Status', $name);
-    }
-
-    /**
-     * @return null|GenericStatus[]
-     */
-    public function getStatuses()
-    {
-        return $this->getSmartPropertyItems('Status');
-    }
-
-    /**
-     * @param string $name
-     * @return GenericStatus
-     * @throws Exception
-     */
-    public function getStatus($name = null)
-    {
-        return $this->getSmartPropertyItem('Status', $name);
-    }
+    use PropertyRecordsTrait;
 
     protected function registerSmartProperties()
     {
-        $this->registerSmartProperty('status');
+        $this->registerSmartPropertyStatus();
     }
 }
