@@ -108,7 +108,7 @@ trait RecordsTrait
         throw new Exception('invalid smart property [' . $property . ']');
     }
 
-    protected abstract function registerSmartProperties();
+    abstract protected function registerSmartProperties();
 
     /**
      * @param $field

@@ -6,8 +6,6 @@ use ByTIC\Models\SmartProperties\Properties\Types\Generic as GenericType;
 
 trait PropertyRecordTrait
 {
-
-
     /**
      * @return \ByTIC\Models\SmartProperties\Properties\AbstractProperty\Generic|GenericType
      */
