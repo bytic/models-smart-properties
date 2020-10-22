@@ -2,10 +2,7 @@
 
 namespace ByTIC\Models\SmartProperties\Properties\AbstractProperty;
 
-use ByTIC\Models\SmartProperties\Properties\AbstractProperty\Traits\HasManagerTrait;
-use ByTIC\Models\SmartProperties\Properties\AbstractProperty\Traits\HasNameTrait;
 use Nip\Records\Record as Record;
-use ReflectionClass;
 
 /**
  * Class Generic
@@ -13,17 +10,14 @@ use ReflectionClass;
  */
 abstract class Generic
 {
-    use HasManagerTrait;
-    use HasNameTrait;
+    use Traits\HasItemTrait;
+    use Traits\HasManagerTrait;
+    use Traits\HasNameTrait;
 
     protected $label = null;
 
     protected $label_short = null;
 
-    /**
-     * @var null|Record
-     */
-    protected $item;
 
     /**
      * @var null|string
@@ -197,25 +191,6 @@ abstract class Generic
         }
 
         return false;
-    }
-
-    /**
-     * @return Record|null
-     */
-    public function getItem()
-    {
-        return $this->item;
-    }
-
-    /**
-     * @param $i
-     * @return $this
-     */
-    public function setItem($i)
-    {
-        $this->item = $i;
-
-        return $this;
     }
 
     public function preValueChange()

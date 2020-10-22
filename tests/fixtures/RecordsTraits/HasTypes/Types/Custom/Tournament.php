@@ -8,4 +8,5 @@ namespace ByTIC\Models\SmartProperties\Tests\Fixtures\RecordsTraits\HasTypes\Typ
  */
 class Tournament extends AbstractType
 {
+    protected $aliases = ['tournament'];
 }

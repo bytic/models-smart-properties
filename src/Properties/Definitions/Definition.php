@@ -2,10 +2,12 @@
 
 namespace ByTIC\Models\SmartProperties\Properties\Definitions;
 
-use ByTIC\Common\Records\Traits\HasSmartProperties\RecordsTrait;
+use ByTIC\Models\SmartProperties\Properties\AbstractProperty\Generic;
 use ByTIC\Models\SmartProperties\Properties\AbstractProperty\Generic as Property;
+use ByTIC\Models\SmartProperties\RecordsTraits\HasSmartProperties\RecordsTrait;
 use Exception;
 use Nip\Records\RecordManager;
+use Nip\Utility\Str;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 
@@ -38,6 +40,7 @@ class Definition
     protected $field;
 
     protected $items = null;
+    protected $itemsAliases = [];
 
     protected $defaultValue = null;
 
@@ -47,24 +50,26 @@ class Definition
      * @return Property
      * @throws Exception
      */
-    public function getItem($name)
+    public function getItem($name): Property
     {
         $items = $this->getItems();
-        if (! $this->hasItem($name)) {
+        if (!$this->hasItem($name)) {
             throw new Exception(
                 'Bad Item [' . $name . '] for smart property 
                 [' . $this->getManager()->getController() . '::' . $this->getName() . ']
                 [' . implode(',', array_keys($items)) . ']'
             );
         }
-
+        if (isset($this->itemsAliases[$name])) {
+            $name = $this->itemsAliases[$name];
+        }
         return $items[$name];
     }
 
     /**
      * @return null|Property[]
      */
-    public function getItems()
+    public function getItems(): ?array
     {
         if ($this->items == null) {
             $this->initItems();
@@ -79,8 +84,8 @@ class Definition
         $this->items = [];
         foreach ($names as $name) {
             if (! $this->isAbstractItemName($name)) {
-                $object                          = $this->newStatus($name);
-                $this->items[$object->getName()] = $object;
+                $object = $this->newProperty($name);
+                $this->addItem($object);
             }
         }
     }
@@ -111,7 +116,7 @@ class Definition
     /**
      * @return mixed
      */
-    public function getName()
+    public function getName(): ?string
     {
         if ($this->name === null) {
             $this->initName();
@@ -135,9 +140,9 @@ class Definition
     }
 
     /**
-     * @return mixed
+     * @return string|null
      */
-    public function getField()
+    public function getField(): ?string
     {
         return $this->field;
     }
@@ -169,7 +174,7 @@ class Definition
     /**
      * @return array
      */
-    protected function getItemsNamesFromFiles()
+    protected function getItemsNamesFromFiles(): array
     {
         $directory = $this->getItemsDirectory();
         $files = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($directory));
@@ -190,7 +195,7 @@ class Definition
     /**
      * @return string
      */
-    public function getLabel()
+    public function getLabel(): ?string
     {
         if ($this->label === null) {
             $this->initLabel();
@@ -202,7 +207,7 @@ class Definition
     /**
      * @param string $label
      */
-    public function setLabel($label)
+    public function setLabel(string $label)
     {
         $this->label = $label;
     }
@@ -218,12 +223,15 @@ class Definition
      *
      * @return bool
      */
-    public function isAbstractItemName($name)
+    public function isAbstractItemName(string $name): bool
     {
         if (in_array($name, ['Abstract', 'Generic'])) {
             return true;
         }
         if (strpos($name, 'Abstract') === 0) {
+            return true;
+        }
+        if (Str::endsWith($name, 'Trait')) {
             return true;
         }
         if (strpos($name, '\Abstract') !== false) {
@@ -241,14 +249,14 @@ class Definition
      *
      * @return Property
      */
-    public function newStatus($type = null)
+    public function newProperty($type = null): Property
     {
-        $className = $this->getItemClass($type);
-        $object    = new $className();
+        $className = $this->getPropertyClass($type);
+        $object = new $className();
         /** @var Property $object */
         $object->setManager($this->getManager());
         $object->setField($this->getField());
-
+        $object->setName(inflector()->unclassify($type));
         return $object;
     }
 
@@ -257,7 +265,7 @@ class Definition
      *
      * @return string
      */
-    public function getItemClass($type = null)
+    public function getPropertyClass($type = null): string
     {
         $type = $type ? $type : $this->getDefaultValue();
         $type = str_replace(DIRECTORY_SEPARATOR, '\\', $type);
@@ -268,7 +276,7 @@ class Definition
     /**
      * @return string
      */
-    public function getDefaultValue()
+    public function getDefaultValue(): ?string
     {
         if ($this->defaultValue === null) {
             $this->initDefaultValue();
@@ -283,6 +291,18 @@ class Definition
     public function setDefaultValue($defaultValue)
     {
         $this->defaultValue = $defaultValue;
+    }
+
+    /**
+     * @param Generic $object
+     */
+    protected function addItem(Property $object)
+    {
+        $this->items[$object->getName()] = $object;
+        $aliases = $object->getAliases();
+        foreach ($aliases as $alias) {
+            $this->itemsAliases[$alias] = $object->getName();
+        }
     }
 
     protected function initDefaultValue()
@@ -312,20 +332,19 @@ class Definition
 
     /**
      * @param $name
-     *
      * @return bool
      */
-    public function hasItem($name)
+    public function hasItem($name): bool
     {
         $items = $this->getItems();
 
-        return isset($items[$name]);
+        return isset($items[$name]) || isset($this->itemsAliases[$name]);
     }
 
     /**
      * @return string
      */
-    protected function getPropertyItemsRootNamespace()
+    protected function getPropertyItemsRootNamespace(): string
     {
         $manager = $this->getManager();
         $method = 'get' . $this->getName() . 'ItemsRootNamespace';
@@ -346,10 +365,10 @@ class Definition
      *
      * @return array
      */
-    public function getValues($name)
+    public function getValues($name): array
     {
         $return = [];
-        $items  = $this->getItems();
+        $items = $this->getItems();
 
         foreach ($items as $type) {
             $method = 'get' . ucfirst($name);

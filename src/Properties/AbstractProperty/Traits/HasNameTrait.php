@@ -12,10 +12,20 @@ trait HasNameTrait
 {
     protected $name = null;
 
+    protected $aliases = [];
+
+    /**
+     * @return array
+     */
+    public function getAliases(): array
+    {
+        return $this->aliases;
+    }
+
     /**
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         if ($this->name == null) {
             $this->initName();
@@ -24,15 +34,23 @@ trait HasNameTrait
         return $this->name;
     }
 
-    public function initName()
+    /**
+     * @param null $name
+     */
+    public function setName($name): void
     {
-        $this->name = $this->generateName();
+        $this->name = $name;
+    }
+
+    protected function initName()
+    {
+        $this->setName($this->generateName());
     }
 
     /**
      * @return string
      */
-    public function generateName()
+    protected function generateName(): string
     {
         $name = $this->generateNameFromClass();
         $name = inflector()->unclassify($name);
@@ -43,11 +61,12 @@ trait HasNameTrait
     /**
      * @return string
      */
-    protected function generateNameFromClass()
+    protected function generateNameFromClass(): string
     {
         try {
             return (new ReflectionClass($this))->getShortName();
         } catch (\ReflectionException $e) {
+            return '';
         }
     }
 }
