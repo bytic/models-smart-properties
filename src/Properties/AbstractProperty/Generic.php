@@ -2,8 +2,6 @@
 
 namespace ByTIC\Models\SmartProperties\Properties\AbstractProperty;
 
-use Nip\Records\Record as Record;
-
 /**
  * Class Generic
  * @package ByTIC\Models\SmartProperties\Properties\AbstractProperty
@@ -154,15 +152,20 @@ abstract class Generic
     /**
      * @return string
      */
-    public function getIconHTML()
+    public function getIconHTML(): string
     {
         $icon = $this->getIcon();
-        $return = '';
-        if ($icon) {
-            $return .= '<span class="glyphicon glyphicon-white ' . $icon . '"></span> ';
+        if (strpos($icon, 'glyphicon') !== false) {
+            return '<span class="glyphicon glyphicon-white ' . $icon . '"></span> ';
+        }
+        if (strpos($icon, 'fas') === 0 || strpos($icon, 'far') === 0) {
+            return '<i class="' . $icon . '"></i>';
+        }
+        if (strpos($icon, 'fa') === 0) {
+            return '<i class="fas ' . $icon . '"></i>';
         }
 
-        return $return;
+        return '';
     }
 
     /**
