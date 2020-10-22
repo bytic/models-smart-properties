@@ -12,6 +12,8 @@ trait HasNameTrait
 {
     protected $name = null;
 
+    protected $namespace = null;
+
     protected $aliases = [];
 
     /**
@@ -42,6 +44,22 @@ trait HasNameTrait
         $this->name = $name;
     }
 
+    /**
+     * @return null
+     */
+    public function getNamespace()
+    {
+        return $this->namespace;
+    }
+
+    /**
+     * @param null $namespace
+     */
+    public function setNamespace($namespace): void
+    {
+        $this->namespace = $namespace;
+    }
+
     protected function initName()
     {
         $this->setName($this->generateName());
@@ -63,6 +81,11 @@ trait HasNameTrait
      */
     protected function generateNameFromClass(): string
     {
+        $class = static::class;
+        $base = $this->getNamespace();
+        if ($base && strpos($class, $base) ===0) {
+            return str_replace($base, '', $class);
+        }
         try {
             return (new ReflectionClass($this))->getShortName();
         } catch (\ReflectionException $e) {

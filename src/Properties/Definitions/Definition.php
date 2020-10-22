@@ -256,7 +256,7 @@ class Definition
         /** @var Property $object */
         $object->setManager($this->getManager());
         $object->setField($this->getField());
-        $object->setName(inflector()->unclassify($type));
+        $object->setNamespace($this->getPropertyItemsRootNamespace());
         return $object;
     }
 
