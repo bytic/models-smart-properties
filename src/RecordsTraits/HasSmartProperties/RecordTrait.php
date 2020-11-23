@@ -76,7 +76,7 @@ trait RecordTrait
     {
         $field = $definition->getField();
         $value = $this->getAttributeFromArray($field);
-        if ($value === null) {
+        if (empty($value)) {
             $value = $definition->getDefaultValue();
         }
 

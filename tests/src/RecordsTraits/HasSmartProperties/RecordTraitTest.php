@@ -6,6 +6,7 @@ use ByTIC\Models\SmartProperties\Properties\AbstractProperty\Generic;
 use ByTIC\Models\SmartProperties\Tests\Fixtures\RecordsTraits\HasSmartProperties\Record;
 use ByTIC\Models\SmartProperties\Tests\Fixtures\RecordsTraits\HasSmartProperties\Records;
 use ByTIC\Models\SmartProperties\Tests\AbstractTest;
+use ByTIC\Models\SmartProperties\Tests\Fixtures\RecordsTraits\HasSmartProperties\RegistrationStatuses\Unregistered;
 
 /**
  * Class TraitsTest
@@ -26,7 +27,14 @@ class RecordTraitTest extends AbstractTest
 
         $registrationStatus = $this->object->getSmartProperty('RegistrationStatus');
         self::assertInstanceOf(Generic::class, $registrationStatus);
-        self::assertSame('free_confirmed', $registrationStatus->getName());
+        self::assertSame('unregistered', $registrationStatus->getName());
+    }
+
+    public function test_getProperty_EmptyValue()
+    {
+        $this->object->registration_status = '';
+        $registrationStatus = $this->object->getSmartProperty('RegistrationStatus');
+        self::assertInstanceOf(Unregistered::class, $registrationStatus);
     }
 
     public function testGetStatusWithValue()

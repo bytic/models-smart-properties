@@ -19,6 +19,11 @@ class Records extends AbstractRecords
         $this->registerSmartProperty('registration_status');
     }
 
+    public function getDefaultRegistrationStatus(): string
+    {
+        return 'unregistered';
+    }
+
     /** @noinspection PhpMissingParentCallCommonInspection
      * @return string
      */
