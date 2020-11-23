@@ -33,5 +33,4 @@ trait HasItemTrait
 
         return $this;
     }
-
 }
