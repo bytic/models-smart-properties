@@ -82,7 +82,7 @@ class RecordsTraitTest extends AbstractTest
 
     public function test_registerSmartProperty()
     {
-        $field = new \ByTIC\Models\SmartProperties\Tests\Fixtures\RecordsTraits\PdfLetters\Record;
+        $field = new \ByTIC\Models\SmartProperties\Tests\Fixtures\RecordsTraits\PdfLetters\Record();
         $field->field = 'relay';
 
         self::assertInstanceOf(
@@ -93,7 +93,7 @@ class RecordsTraitTest extends AbstractTest
 
 
     protected function setUp(): void
-    {   
+    {
         parent::setUp();
         $this->object = new Records();
     }
