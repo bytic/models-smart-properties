@@ -54,9 +54,9 @@ abstract class Generic
      *
      * @return string
      */
-    public function getLabelClasses()
+    public function getLabelClasses(): string
     {
-        return 'label label-' . $this->getColorClass();
+        return 'badge badge-' . $this->getColorClass() . ' label label-' . $this->getColorClass();
     }
 
     /**

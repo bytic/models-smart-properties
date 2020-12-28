@@ -4,7 +4,7 @@
   "license": "MIT",
   "description": "Models Smart Properties for bytic library",
   "keywords": [],
-  "homepage": "https://github.com/ByTIC/form-builder",
+  "homepage": "https://github.com/ByTIC/models-smart-properties",
   "authors": [
     {
       "name": "Gabriel Solomon",
@@ -23,7 +23,7 @@
     }
   },
   "require": {
-    "php": "^7.0",
+    "php": "^7.0|^8.0",
     "bytic/utility": "^1.0",
     "bytic/orm": "^0.9|^1.0"
   },
