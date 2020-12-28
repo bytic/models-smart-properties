@@ -21,10 +21,10 @@ class RecordsTraitTest extends AbstractTest
     {
         $types = $this->object->getTypes();
         self::assertCount(3, $types);
-        
-        self::assertArrayHasKey('custom-tournament',$types);
+
+        self::assertArrayHasKey('custom-tournament', $types);
         self::assertArrayHasKey('individual', $types);
-        self::assertArrayHasKey('relay',$types);
+        self::assertArrayHasKey('relay', $types);
 
         self::assertInstanceOf(Tournament::class, $this->object->getType('tournament'));
     }
