@@ -2,7 +2,7 @@
 
 namespace ByTIC\Models\SmartProperties\Properties\AbstractProperty\Traits;
 
-use ByTIC\Models\SmartProperties\Properties\AbstractProperty\Generic;
+use ByTIC\Models\SmartProperties\Properties\Registry;
 use Nip\Records\Record as Record;
 
 /**
