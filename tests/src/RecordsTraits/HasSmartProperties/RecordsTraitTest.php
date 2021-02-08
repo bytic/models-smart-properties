@@ -35,10 +35,6 @@ class RecordsTraitTest extends AbstractTest
         self::assertSame('Status', $statusDefinition->getName());
         self::assertSame('status', $statusDefinition->getField());
         self::assertSame('Statuses', $statusDefinition->getLabel());
-        self::assertStringEndsWith(
-            str_replace('/', DIRECTORY_SEPARATOR, 'RecordsTraits/HasSmartProperties/Statuses'),
-            $statusDefinition->getItemsDirectory()
-        );
 
         /** @var Definition $statusDefinition */
         $statusDefinition = $this->object->getSmartPropertyDefinition('RegistrationStatus');
@@ -46,10 +42,6 @@ class RecordsTraitTest extends AbstractTest
         self::assertSame('RegistrationStatus', $statusDefinition->getName());
         self::assertSame('registration_status', $statusDefinition->getField());
         self::assertSame('RegistrationStatuses', $statusDefinition->getLabel());
-        self::assertStringEndsWith(
-            str_replace('/', DIRECTORY_SEPARATOR, 'RecordsTraits/HasSmartProperties/RegistrationStatuses'),
-            $statusDefinition->getItemsDirectory()
-        );
     }
 
     public function testGetSmartPropertyItems()

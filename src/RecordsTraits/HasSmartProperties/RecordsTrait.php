@@ -2,6 +2,7 @@
 
 namespace ByTIC\Models\SmartProperties\RecordsTraits\HasSmartProperties;
 
+use ByTIC\Models\SmartProperties\Definitions\Builders\FolderBuilders;
 use ByTIC\Models\SmartProperties\Definitions\DefinitionRegistry;
 use ByTIC\Models\SmartProperties\Properties\AbstractProperty\Generic as PropertyValue;
 use ByTIC\Models\SmartProperties\Properties\Definitions\Definition;
@@ -107,24 +108,10 @@ trait RecordsTrait
      */
     protected function registerSmartProperty($field, $name = null)
     {
-        $definition = $this->newSmartPropertyDefinition();
-        $definition->setField($field);
-        if ($name) {
-            $definition->setName($name);
-        }
+        $definition = FolderBuilders::create($this, $field, $name);
         $this->addSmartPropertyDefinition($definition);
     }
 
-    /**
-     * @return Definition
-     */
-    protected function newSmartPropertyDefinition()
-    {
-        $definition = new Definition();
-        $definition->setManager($this);
-
-        return $definition;
-    }
 
     /**
      * @param Definition $definition

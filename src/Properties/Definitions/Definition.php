@@ -2,32 +2,30 @@
 
 namespace ByTIC\Models\SmartProperties\Properties\Definitions;
 
+use ByTIC\Models\SmartProperties\Definitions\Traits\HasName;
+use ByTIC\Models\SmartProperties\Definitions\Traits\HasPlaces;
+use ByTIC\Models\SmartProperties\Definitions\Traits\Serializable;
 use ByTIC\Models\SmartProperties\Properties\AbstractProperty\Generic;
 use ByTIC\Models\SmartProperties\Properties\AbstractProperty\Generic as Property;
 use ByTIC\Models\SmartProperties\RecordsTraits\HasSmartProperties\RecordsTrait;
 use Exception;
 use Nip\Records\RecordManager;
-use Nip\Utility\Str;
-use RecursiveDirectoryIterator;
-use RecursiveIteratorIterator;
 
 /**
  * Class Definition
  * @package ByTIC\Models\SmartProperties\Properties\Definitions
  */
-class Definition
+class Definition implements \Serializable
 {
-    use Traits\HasItemsDirectoryTrait;
+    use HasName;
+    use HasPlaces;
+    use Serializable;
 
     /**
      * @var RecordManager|RecordsTrait
      */
     protected $manager;
 
-    /**
-     * @var string
-     */
-    protected $name = null;
 
     /**
      * @var string
@@ -80,63 +78,12 @@ class Definition
 
     public function initItems()
     {
-        $names       = $this->getItemsNames();
+        $names = $this->getPlaces();
         $this->items = [];
         foreach ($names as $name) {
-            if (! $this->isAbstractItemName($name)) {
-                $object = $this->newProperty($name);
-                $this->addItem($object);
-            }
+            $object = $this->newProperty($name);
+            $this->addItem($object);
         }
-    }
-
-    /**
-     * @return array
-     */
-    public function getItemsNames()
-    {
-        $names = $this->getItemsNamesFromManager();
-
-        return $names ? $names : $this->getItemsNamesFromFiles();
-    }
-
-    /**
-     * @return array|boolean
-     */
-    protected function getItemsNamesFromManager()
-    {
-        $methodName = 'get' . $this->getName() . 'Names';
-        if (method_exists($this->getManager(), $methodName)) {
-            return $this->getManager()->$methodName();
-        }
-
-        return false;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getName(): ?string
-    {
-        if ($this->name === null) {
-            $this->initName();
-        }
-
-        return $this->name;
-    }
-
-    /**
-     * @param mixed $name
-     */
-    public function setName($name)
-    {
-        $this->name = $name;
-    }
-
-    protected function initName()
-    {
-        $name = inflector()->classify($this->getField());
-        $this->setName($name);
     }
 
     /**
@@ -172,27 +119,6 @@ class Definition
     }
 
     /**
-     * @return array
-     */
-    protected function getItemsNamesFromFiles(): array
-    {
-        $directory = $this->getItemsDirectory();
-        $files = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($directory));
-        $names = [];
-        foreach ($files as $file) {
-            if ($file->isDir()) {
-                continue;
-            }
-            $name = str_replace($directory, '', $file->getPathname());
-            $name = str_replace('.php', '', $name);
-            $names[] = trim($name, DIRECTORY_SEPARATOR . '\\');
-        }
-
-        return array_unique($names);
-    }
-
-
-    /**
      * @return string
      */
     public function getLabel(): ?string
@@ -216,32 +142,6 @@ class Definition
     {
         $name = inflector()->pluralize($this->getName());
         $this->setLabel($name);
-    }
-
-    /**
-     * @param string $name
-     *
-     * @return bool
-     */
-    public function isAbstractItemName(string $name): bool
-    {
-        if (in_array($name, ['Abstract', 'Generic'])) {
-            return true;
-        }
-        if (strpos($name, 'Abstract') === 0) {
-            return true;
-        }
-        if (Str::endsWith($name, 'Trait')) {
-            return true;
-        }
-        if (strpos($name, '\Abstract') !== false) {
-            return true;
-        }
-        if (strpos($name, DIRECTORY_SEPARATOR . 'Abstract') !== false) {
-            return true;
-        }
-
-        return false;
     }
 
     /**
@@ -311,7 +211,7 @@ class Definition
         if ($managerDefaultValue && $this->hasItem($managerDefaultValue)) {
             $defaultValue = $managerDefaultValue;
         } else {
-            $keys         = array_keys($this->getItems());
+            $keys = array_keys($this->getItems());
             $defaultValue = reset($keys);
         }
         $this->setDefaultValue($defaultValue);
