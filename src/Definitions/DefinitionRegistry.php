@@ -1,17 +1,28 @@
 <?php
 
-namespace ByTIC\Models\SmartProperties\Properties\Definitions;
+namespace ByTIC\Models\SmartProperties\Definitions;
 
 use ByTIC\Models\SmartProperties\Exceptions\InvalidArgumentException;
+use ByTIC\Models\SmartProperties\Properties\Definitions\Definition;
 use Nip\Utility\Traits\SingletonTrait;
 
 /**
  * Class DefinitionRegistry
- * @package ByTIC\Models\SmartProperties\Properties\Definitions
+ * @package ByTIC\Models\SmartProperties\Definitions
  */
 class DefinitionRegistry
 {
     use SingletonTrait;
+
+    /**
+     * @var Definition[]
+     */
+    protected $builders = [];
+
+    /**
+     * @var []
+     */
+    protected $definitionsBuilt = [];
 
     /**
      * @var Definition[]
@@ -73,6 +84,20 @@ class DefinitionRegistry
         $definitionName = $this->definitionName($definition);
 
         $this->definitions[$managerName][$definitionName] = $definition;
+    }
+
+    /**
+     * @param object $manager
+     * @param \Closure $callback
+     */
+    public function checkDefinitionToBuild(object $manager, \Closure $callback)
+    {
+        $managerName = $this->managerName($manager);
+        if (isset($this->definitionsBuilt[$managerName])) {
+            return;
+        }
+        $callback();
+        $this->definitionsBuilt[$managerName] = true;
     }
 
     /**
