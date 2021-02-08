@@ -4,6 +4,7 @@ namespace ByTIC\Models\SmartProperties\RecordsTraits\HasSmartProperties;
 
 use ByTIC\Models\SmartProperties\Properties\AbstractProperty\Generic as PropertyValue;
 use ByTIC\Models\SmartProperties\Properties\Definitions\Definition;
+use ByTIC\Models\SmartProperties\Properties\Definitions\DefinitionRegistry;
 use Exception;
 
 /**
@@ -14,7 +15,7 @@ trait RecordsTrait
 {
     use \ByTIC\Models\SmartProperties\RecordsTraits\AbstractTrait\RecordsTrait;
 
-    protected $smartPropertiesDefinitions = null;
+    protected $smartPropertiesLoaded = false;
 
     /**
      * @return array
@@ -23,20 +24,29 @@ trait RecordsTrait
     {
         $this->checkSmartPropertiesDefinitions();
 
-        return $this->smartPropertiesDefinitions;
+        return $this->getSmartPropertyDefinitionRegistry()->getAll($this);
+    }
+
+    /**
+     * @return bool
+     */
+    public function isSmartPropertiesLoaded(): bool
+    {
+        return $this->smartPropertiesLoaded;
     }
 
     protected function checkSmartPropertiesDefinitions()
     {
-        if ($this->smartPropertiesDefinitions === null) {
-            $this->initSmartPropertiesDefinitions();
+        if ($this->isSmartPropertiesLoaded()) {
+            return;
         }
+        $this->initSmartPropertiesDefinitions();
     }
 
     protected function initSmartPropertiesDefinitions()
     {
-        $this->smartPropertiesDefinitions = [];
         $this->registerSmartProperties();
+        $this->smartPropertiesLoaded = true;
     }
 
     /**
@@ -59,11 +69,11 @@ trait RecordsTrait
      */
     public function getSmartPropertyDefinition($name)
     {
-        if ($this->hasSmartPropertyDefinition($name)) {
-            return $this->smartPropertiesDefinitions[$name];
+        if (!$this->hasSmartPropertyDefinition($name)) {
+            return null;
         }
 
-        return null;
+        return $this->getSmartPropertyDefinitionRegistry()->get($this, $name);
     }
 
     /**
@@ -74,8 +84,7 @@ trait RecordsTrait
     {
         $this->checkSmartPropertiesDefinitions();
 
-        return isset($this->smartPropertiesDefinitions[$name])
-        && $this->smartPropertiesDefinitions[$name] instanceof Definition;
+        return $this->getSmartPropertyDefinitionRegistry()->has($this, $name);
     }
 
     /**
@@ -139,6 +148,14 @@ trait RecordsTrait
      */
     protected function addSmartPropertyDefinition($definition)
     {
-        $this->smartPropertiesDefinitions[$definition->getName()] = $definition;
+        $this->getSmartPropertyDefinitionRegistry()->set($this, $definition);
+    }
+
+    /**
+     * @return DefinitionRegistry
+     */
+    protected function getSmartPropertyDefinitionRegistry(): DefinitionRegistry
+    {
+        return DefinitionRegistry::instance();
     }
 }

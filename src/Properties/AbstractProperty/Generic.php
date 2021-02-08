@@ -2,11 +2,13 @@
 
 namespace ByTIC\Models\SmartProperties\Properties\AbstractProperty;
 
+use ByTIC\Models\SmartProperties\Workflow\State;
+
 /**
  * Class Generic
  * @package ByTIC\Models\SmartProperties\Properties\AbstractProperty
  */
-abstract class Generic
+abstract class Generic extends State
 {
     use Traits\HasItemTrait;
     use Traits\HasManagerTrait;
@@ -232,11 +234,4 @@ abstract class Generic
         return 'info';
     }
 
-    /**
-     * @return string
-     */
-    public function __toString(): string
-    {
-        return $this->getName();
-    }
 }

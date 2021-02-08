@@ -10,8 +10,6 @@ use ReflectionClass;
  */
 trait HasNameTrait
 {
-    protected $name = null;
-
     protected $namespace = null;
 
     protected $aliases = [];
@@ -24,25 +22,6 @@ trait HasNameTrait
         return $this->aliases;
     }
 
-    /**
-     * @return string
-     */
-    public function getName(): string
-    {
-        if ($this->name == null) {
-            $this->initName();
-        }
-
-        return $this->name;
-    }
-
-    /**
-     * @param null $name
-     */
-    public function setName($name): void
-    {
-        $this->name = $name;
-    }
 
     /**
      * @return null
@@ -58,11 +37,6 @@ trait HasNameTrait
     public function setNamespace($namespace): void
     {
         $this->namespace = $namespace;
-    }
-
-    protected function initName()
-    {
-        $this->setName($this->generateName());
     }
 
     /**
