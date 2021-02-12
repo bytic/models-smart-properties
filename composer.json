@@ -14,7 +14,10 @@
   "autoload": {
     "psr-4": {
       "ByTIC\\Models\\SmartProperties\\": "src/"
-    }
+    },
+    "classmap": [
+      "legacy"
+    ]
   },
   "autoload-dev": {
     "psr-4": {

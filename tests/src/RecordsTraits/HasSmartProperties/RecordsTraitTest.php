@@ -2,13 +2,13 @@
 
 namespace ByTIC\Models\SmartProperties\Tests\RecordsTraits\HasSmartProperties;
 
-use ByTIC\Models\SmartProperties\Properties\Definitions\Definition;
+use ByTIC\Models\SmartProperties\Definitions\Definition;
+use ByTIC\Models\SmartProperties\Tests\AbstractTest;
 use ByTIC\Models\SmartProperties\Tests\Fixtures\RecordsTraits\HasSmartProperties\Records;
 use ByTIC\Models\SmartProperties\Tests\Fixtures\RecordsTraits\HasSmartProperties\RegistrationStatuses\FreeConfirmed;
 use ByTIC\Models\SmartProperties\Tests\Fixtures\RecordsTraits\HasSmartProperties\RegistrationStatuses\Unpaid;
 use ByTIC\Models\SmartProperties\Tests\Fixtures\RecordsTraits\HasSmartProperties\Statuses\Allocated;
 use ByTIC\Models\SmartProperties\Tests\Fixtures\RecordsTraits\HasSmartProperties\Statuses\Applicant;
-use ByTIC\Models\SmartProperties\Tests\AbstractTest;
 
 /**
  * Class TraitsTest
@@ -63,7 +63,7 @@ class RecordsTraitTest extends AbstractTest
         self::assertSame(['allocated', 'applicant'], $values);
 
         $values = $this->object->getSmartPropertyValues('RegistrationStatus', 'name');
-        self::assertEqualsCanonicalizing(['free_confirmed', 'paid_confirmed',  'unregistered', 'unpaid'], $values);
+        self::assertEqualsCanonicalizing(['free_confirmed', 'paid_confirmed', 'unregistered', 'unpaid'], $values);
     }
 
     public function testGetSmartPropertyItem()

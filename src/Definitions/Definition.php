@@ -1,10 +1,7 @@
 <?php
 
-namespace ByTIC\Models\SmartProperties\Properties\Definitions;
+namespace ByTIC\Models\SmartProperties\Definitions;
 
-use ByTIC\Models\SmartProperties\Definitions\Traits\HasName;
-use ByTIC\Models\SmartProperties\Definitions\Traits\HasPlaces;
-use ByTIC\Models\SmartProperties\Definitions\Traits\Serializable;
 use ByTIC\Models\SmartProperties\Properties\AbstractProperty\Generic;
 use ByTIC\Models\SmartProperties\Properties\AbstractProperty\Generic as Property;
 use ByTIC\Models\SmartProperties\RecordsTraits\HasSmartProperties\RecordsTrait;
@@ -13,13 +10,13 @@ use Nip\Records\RecordManager;
 
 /**
  * Class Definition
- * @package ByTIC\Models\SmartProperties\Properties\Definitions
+ * @package ByTIC\Models\SmartProperties\Definitions
  */
 class Definition implements \Serializable
 {
-    use HasName;
-    use HasPlaces;
-    use Serializable;
+    use Traits\HasName;
+    use Traits\HasPlaces;
+    use Traits\Serializable;
 
     /**
      * @var RecordManager|RecordsTrait

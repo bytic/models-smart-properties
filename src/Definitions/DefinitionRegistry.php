@@ -3,7 +3,6 @@
 namespace ByTIC\Models\SmartProperties\Definitions;
 
 use ByTIC\Models\SmartProperties\Exceptions\InvalidArgumentException;
-use ByTIC\Models\SmartProperties\Properties\Definitions\Definition;
 use Nip\Utility\Traits\SingletonTrait;
 
 /**

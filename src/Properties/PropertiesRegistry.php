@@ -2,8 +2,7 @@
 
 namespace ByTIC\Models\SmartProperties\Properties;
 
-use ByTIC\Models\SmartProperties\Properties\AbstractProperty\Generic;
-use ByTIC\Models\SmartProperties\Properties\Definitions\Definition;
+use ByTIC\Models\SmartProperties\Definitions\Definition;
 
 /**
  * Class Registry

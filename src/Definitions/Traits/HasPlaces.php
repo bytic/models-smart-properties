@@ -34,5 +34,4 @@ trait HasPlaces
     {
         return $this->getPlaces();
     }
-
 }

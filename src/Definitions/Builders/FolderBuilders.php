@@ -2,7 +2,7 @@
 
 namespace ByTIC\Models\SmartProperties\Definitions\Builders;
 
-use ByTIC\Models\SmartProperties\Properties\Definitions\Definition;
+use ByTIC\Models\SmartProperties\Definitions\Definition;
 use Nip\Records\AbstractModels\RecordManager;
 use Nip\Utility\Str;
 use RecursiveDirectoryIterator;
