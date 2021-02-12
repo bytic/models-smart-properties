@@ -18,9 +18,12 @@ class SerializableTest extends AbstractTest
         $definition->setPlaces(['pending', 'published']);
         $data = serialize($definition);
 
-        self::assertSame('', $data);
+        self::assertSame(
+            'C:62:"ByTIC\Models\SmartProperties\Properties\Definitions\Definition":115:{a:4:{s:4:"name";N;s:5:"field";s:6:"status";s:5:"label";N;s:6:"places";a:2:{i:0;s:7:"pending";i:1;s:9:"published";}}}',
+            $data
+        );
         $definition2 = unserialize($data);
-        self::assertSame($definition, $definition2);
+        self::assertEquals($definition, $definition2);
     }
 
 }

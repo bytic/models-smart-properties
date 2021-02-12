@@ -2,19 +2,19 @@
 
 namespace ByTIC\Models\SmartProperties\Definitions\Traits;
 
+use ByTIC\DataObjects\Behaviors\Serializable\SerializableTrait;
+
 /**
  * Trait Serializable
  * @package ByTIC\Models\SmartProperties\Definitions\Traits
  */
 trait Serializable
 {
-    public function serialize(): array
-    {
-        return ['name', 'label', 'places'];
-    }
+    use SerializableTrait;
 
-    public function unserialize($serialized)
-    {
-        // TODO: Implement unserialize() method.
-    }
+    /**
+     * @var array List of attribute names which should be stored in serialized form
+     */
+    protected $serializable = ['name', 'field', 'label', 'places'];
+
 }
