@@ -2,11 +2,14 @@
 
 namespace ByTIC\Models\SmartProperties\Tests\RecordsTraits\HasSmartProperties;
 
+use ByTIC\EventDispatcher\Dispatcher\EventDispatcher;
 use ByTIC\Models\SmartProperties\Properties\AbstractProperty\Generic;
 use ByTIC\Models\SmartProperties\Tests\Fixtures\RecordsTraits\HasSmartProperties\Record;
 use ByTIC\Models\SmartProperties\Tests\Fixtures\RecordsTraits\HasSmartProperties\Records;
 use ByTIC\Models\SmartProperties\Tests\AbstractTest;
 use ByTIC\Models\SmartProperties\Tests\Fixtures\RecordsTraits\HasSmartProperties\RegistrationStatuses\Unregistered;
+use Nip\Container\Container;
+use Symfony\Component\Workflow\Event\Event;
 
 /**
  * Class TraitsTest
@@ -51,11 +54,21 @@ class RecordTraitTest extends AbstractTest
         self::assertSame('unpaid', $registrationStatus->getName());
     }
 
-    public function testUpdateSmartProperty()
+    public function test_updateSmartProperty()
     {
         $this->object->status = 'applicant';
 
+        $eventDispatcher = \Mockery::mock(EventDispatcher::class)->makePartial();
+        $eventDispatcher->shouldReceive('dispatch')->once()->with(\Mockery::on(function ($argument) {
+            if (!($argument instanceof Event)) {
+                return false;
+            }
+            return true;
+        }));
+        Container::getInstance()->set('events', $eventDispatcher);
+
         self::assertSame('applicant', $this->object->getSmartProperty('Status')->getName());
+
         $this->object->updateSmartProperty('Status', 'allocated');
         self::assertSame('allocated', $this->object->status);
         self::assertSame('allocated', $this->object->getSmartProperty('Status')->getName());

@@ -3,6 +3,11 @@
 namespace ByTIC\Models\SmartProperties\Properties\AbstractProperty;
 
 use ByTIC\Models\SmartProperties\Workflow\State;
+use Symfony\Component\Workflow\Definition;
+use Symfony\Component\Workflow\Event\AnnounceEvent;
+use Symfony\Component\Workflow\Marking;
+use Symfony\Component\Workflow\Transition;
+use Symfony\Component\Workflow\Workflow;
 
 /**
  * Class Generic
@@ -184,18 +189,23 @@ abstract class Generic extends State
     public function update()
     {
         $item = $this->getItem();
-        if ($item) {
-            $this->preValueChange();
-            /** @noinspection PhpUndefinedFieldInspection */
-            $item->{$this->getField()} = $this->getName();
-            $this->preUpdate();
-            $return = $item->saveRecord();
-            $this->postUpdate();
-
-            return $return;
+        if (!is_object($item)) {
+            return false;
         }
+        $this->preValueChange();
+        /** @noinspection PhpUndefinedFieldInspection */
+        $item->{$this->getField()} = $this->getName();
+        $this->preUpdate();
+        $return = $item->saveRecord();
+        $this->postUpdate();
 
-        return false;
+        $marking = new Marking();
+        $initialTransition = new Transition('generic_transition', [], []);
+        $workflow = new Workflow(new Definition([], []));
+        $event = new AnnounceEvent($item, $marking, $initialTransition, $workflow, []);
+
+        event($event);
+        return $return;
     }
 
     public function preValueChange()
