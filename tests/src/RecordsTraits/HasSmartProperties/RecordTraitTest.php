@@ -4,9 +4,9 @@ namespace ByTIC\Models\SmartProperties\Tests\RecordsTraits\HasSmartProperties;
 
 use ByTIC\EventDispatcher\Dispatcher\EventDispatcher;
 use ByTIC\Models\SmartProperties\Properties\AbstractProperty\Generic;
+use ByTIC\Models\SmartProperties\Tests\AbstractTest;
 use ByTIC\Models\SmartProperties\Tests\Fixtures\RecordsTraits\HasSmartProperties\Record;
 use ByTIC\Models\SmartProperties\Tests\Fixtures\RecordsTraits\HasSmartProperties\Records;
-use ByTIC\Models\SmartProperties\Tests\AbstractTest;
 use ByTIC\Models\SmartProperties\Tests\Fixtures\RecordsTraits\HasSmartProperties\RegistrationStatuses\Unregistered;
 use Nip\Container\Container;
 use Symfony\Component\Workflow\Event\Event;
@@ -56,13 +56,17 @@ class RecordTraitTest extends AbstractTest
 
     public function test_updateSmartProperty()
     {
-        $this->object->status = 'applicant';
+        $this->object->setAttribute('status', 'applicant');
 
         $eventDispatcher = \Mockery::mock(EventDispatcher::class)->makePartial();
-        $eventDispatcher->shouldReceive('dispatch')->once()->with(\Mockery::on(function ($argument) {
-            if (!($argument instanceof Event)) {
+        $eventDispatcher->shouldReceive('dispatch')->once()->with(\Mockery::on(function ($event) {
+            if (!($event instanceof Event)) {
                 return false;
             }
+            $transition = $event->getTransition();
+
+            self::assertSame(['applicant'], $transition->getFroms());
+            self::assertSame(['allocated'], $transition->getTos());
             return true;
         }));
         Container::getInstance()->set('events', $eventDispatcher);

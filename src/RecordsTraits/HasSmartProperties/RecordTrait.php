@@ -47,8 +47,8 @@ trait RecordTrait
         }
 
         $newStatus = $this->getNewSmartPropertyFromValue($name, $value);
-        $this->setSmartProperty($name, $newStatus);
         $return = $newStatus->update();
+        $this->setSmartProperty($name, $newStatus);
         return $return;
     }
 

@@ -193,14 +193,17 @@ abstract class Generic extends State
             return false;
         }
         $this->preValueChange();
+
+        $fromState = (string) $item->{$this->getField()};
+        $toState = $this->getName();
         /** @noinspection PhpUndefinedFieldInspection */
-        $item->{$this->getField()} = $this->getName();
+        $item->{$this->getField()} = $toState;
         $this->preUpdate();
         $return = $item->saveRecord();
         $this->postUpdate();
 
         $marking = new Marking();
-        $initialTransition = new Transition('generic_transition', [], []);
+        $initialTransition = new Transition('generic_transition', [$fromState], [$toState]);
         $workflow = new Workflow(new Definition([], []));
         $event = new AnnounceEvent($item, $marking, $initialTransition, $workflow, []);
 
