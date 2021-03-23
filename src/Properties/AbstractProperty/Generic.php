@@ -18,11 +18,7 @@ abstract class Generic extends State
     use Traits\HasItemTrait;
     use Traits\HasManagerTrait;
     use Traits\HasNameTrait;
-
-    protected $label = null;
-
-    protected $label_short = null;
-
+    use Traits\HasTranslationTrait;
 
     /**
      * @var null|string
@@ -76,32 +72,6 @@ abstract class Generic extends State
         return 'default';
     }
 
-    /**
-     * Get Property label
-     *
-     * @param bool $short short flag
-     *
-     * @return null
-     */
-    public function getLabel($short = false)
-    {
-        if (!$this->label) {
-            $this->label = $this->generateLabel();
-            if ($this->hasShortLabel()) {
-                $this->label_short = $this->generateLabelShort();
-            }
-        }
-
-        return $short ? $this->label_short : $this->label;
-    }
-
-    /**
-     * @return string
-     */
-    protected function generateLabel()
-    {
-        return $this->getManager()->translate($this->getLabelSlug() . '.' . $this->getName());
-    }
 
     /**
      * @return string
@@ -114,14 +84,6 @@ abstract class Generic extends State
     protected function hasShortLabel()
     {
         return true;
-    }
-
-    /**
-     * @return string
-     */
-    protected function generateLabelShort()
-    {
-        return $this->getManager()->translate($this->getLabelSlug() . '.' . $this->getName() . '.short');
     }
 
     /**
