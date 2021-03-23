@@ -33,7 +33,7 @@ trait HasTranslationTrait
      * @param string $slug
      * @return string
      */
-    protected function translate($slug = '', $params = [])
+    public function translate($slug = '', $params = [])
     {
         $slug = empty($slug) ? $slug : '.' . $slug;
         return $this->getManager()->translate($this->getLabelSlug() . '.' . $this->getName() . $slug, $params);
