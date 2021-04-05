@@ -59,7 +59,7 @@ abstract class Generic extends State
      */
     public function getLabelClasses(): string
     {
-        return 'badge badge-' . $this->getColorClass() . ' label label-' . $this->getColorClass();
+        return 'badge bg-' . $this->getColorClass() . ' badge-' . $this->getColorClass() . ' label label-' . $this->getColorClass();
     }
 
     /**
