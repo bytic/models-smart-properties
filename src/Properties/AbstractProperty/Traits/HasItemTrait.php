@@ -3,6 +3,7 @@
 namespace ByTIC\Models\SmartProperties\Properties\AbstractProperty\Traits;
 
 use ByTIC\Models\SmartProperties\Properties\Registry;
+use ByTIC\Models\SmartProperties\RecordsTraits\HasSmartProperties\RecordTrait;
 use Nip\Records\Record as Record;
 
 /**
@@ -12,11 +13,12 @@ use Nip\Records\Record as Record;
 trait HasItemTrait
 {
     /**
-     * @var null|Record
+     * @var null|Record|RecordTrait
      */
     protected $item;
+
     /**
-     * @return Record|null
+     * @return Record|null|RecordTrait
      */
     public function getItem()
     {

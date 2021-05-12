@@ -113,12 +113,13 @@ trait RecordTrait
         if (is_string($value)) {
             $value = $this->getNewSmartPropertyFromValue($name, $value);
         }
+
+        $this->setPropertyValue($field, $value->getName());
+        
         $currentProperty = $this->getSmartProperty($name);
         if ($currentProperty->getName() === $value->getName()) {
             return;
         }
-
-        $this->setPropertyValue($field, $value->getName());
         PropertiesRegistry::set($this, $definition, $value);
     }
 }
