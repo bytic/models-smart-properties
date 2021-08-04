@@ -64,7 +64,7 @@ class FolderBuilders
     {
         $names = $this->getItemsNamesFromManager();
 
-        $names = $names ? $names : $this->getItemsNamesFromFiles();
+        $names = $names ?: $this->getItemsNamesFromFiles();
 
         foreach ($names as $key => $name) {
             if ($this->isAbstractItemName($name)) {

@@ -164,7 +164,7 @@ class Definition implements \Serializable
      */
     public function getPropertyClass($type = null): string
     {
-        $type = $type ? $type : $this->getDefaultValue();
+        $type = $type ?: $this->getDefaultValue();
         $type = str_replace(DIRECTORY_SEPARATOR, '\\', $type);
 
         return $this->getPropertyItemsRootNamespace() . inflector()->classify($type);

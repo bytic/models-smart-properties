@@ -19,7 +19,7 @@ trait HasNameTrait
      */
     public function getAliases(): array
     {
-        return $this->aliases;
+        return array_merge($this->aliases, [$this->generateNameFromClass()]);
     }
 
 
