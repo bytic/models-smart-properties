@@ -93,10 +93,10 @@ abstract class Generic extends State
     {
         $css = [];
         if ($this->getBGColor()) {
-            $css[] = 'background-color: ' . $this->getBGColor();
+            $css[] = 'background-color: ' . $this->getBGColor().' !important';
         }
         if ($this->getFGColor()) {
-            $css[] = 'color: ' . $this->getFGColor();
+            $css[] = 'color: ' . $this->getFGColor().' !important';
         }
 
         return implode(';', $css);
