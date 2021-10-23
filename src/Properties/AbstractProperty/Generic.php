@@ -69,7 +69,7 @@ abstract class Generic extends State
      */
     public function getColorClass()
     {
-        return 'default';
+        return 'dark';
     }
 
 
