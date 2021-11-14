@@ -1,6 +1,6 @@
 <?php
 
-namespace ByTIC\Models\SmartProperties\Definitions\Traits;
+namespace ByTIC\Models\SmartProperties\Definitions\Definition;
 
 /**
  * Trait HasPlaces
@@ -15,6 +15,7 @@ trait HasPlaces
      */
     public function getPlaces(): array
     {
+        $this->checkBuild();
         return $this->places;
     }
 
@@ -24,6 +25,11 @@ trait HasPlaces
     public function setPlaces(array $places): void
     {
         $this->places = $places;
+    }
+
+    public function addPlace()
+    {
+        $this->places = array_unique(array_merge($this->places, func_get_args()));
     }
 
     /**

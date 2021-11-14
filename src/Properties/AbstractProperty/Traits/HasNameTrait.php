@@ -22,7 +22,6 @@ trait HasNameTrait
         return array_merge($this->aliases, [$this->generateNameFromClass()]);
     }
 
-
     /**
      * @return null
      */

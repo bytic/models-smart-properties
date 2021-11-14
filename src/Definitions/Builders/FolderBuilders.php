@@ -3,6 +3,7 @@
 namespace ByTIC\Models\SmartProperties\Definitions\Builders;
 
 use ByTIC\Models\SmartProperties\Definitions\Definition;
+use ByTIC\Models\SmartProperties\Properties\PropertiesFactory;
 use Nip\Records\AbstractModels\RecordManager;
 use Nip\Utility\Str;
 use RecursiveDirectoryIterator;
@@ -24,8 +25,6 @@ class FolderBuilders
      */
     protected $definition;
 
-    protected $itemsDirectory = null;
-
     /**
      * @param RecordManager $manager
      * @param string $field
@@ -40,7 +39,12 @@ class FolderBuilders
         if ($name) {
             $builder->definition->setName($name);
         }
-        $builder->definition->setPlaces($builder->buildPlaces());
+        $builder->definition->setBuild(function () use ($builder) {
+            $items = $builder->buildItems();
+            foreach ($items as $item) {
+                $builder->definition->addItem($item);
+            }
+        });
         return $builder->definition;
     }
 
@@ -60,27 +64,31 @@ class FolderBuilders
     /**
      * @return array
      */
-    protected function buildPlaces()
+    protected function buildItems()
     {
-        $names = $this->getItemsNamesFromManager();
+//        $names = $this->getItemsNamesFromManager();
 
-        $names = $names ?: $this->getItemsNamesFromFiles();
+        $items = $this->getItemsFromFiles();
 
-        foreach ($names as $key => $name) {
-            if ($this->isAbstractItemName($name)) {
-                unset($names[$key]);
-            }
-        }
-        return $names;
+        return $items;
     }
 
 
     /**
      * @return array
      */
-    protected function getItemsNamesFromFiles(): array
+    protected function getItemsFromFiles(): array
     {
-        $directory = $this->getItemsDirectory();
+        $directories = $this->definition->getPropertiesNamespaces();
+        $items = [];
+        foreach ($directories as $namespace => $directory) {
+            $items = array_merge($items, $this->getItemsFromDirectory($directory, $namespace));
+        }
+        return $items;
+    }
+
+    protected function getItemsFromDirectory($directory, $namespace): array
+    {
         $files = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($directory));
         $names = [];
         foreach ($files as $file) {
@@ -89,11 +97,17 @@ class FolderBuilders
             }
             $name = str_replace($directory, '', $file->getPathname());
             $name = str_replace('.php', '', $name);
-            $names[] = trim($name, DIRECTORY_SEPARATOR . '\\');
+            $name = trim($name, DIRECTORY_SEPARATOR . '\\');
+            if ($this->isAbstractItemName($name)) {
+                continue;
+            }
+            $class = $namespace . '' . $name;
+            $names[$name] = PropertiesFactory::forDefinition($this->definition, $class, $namespace);
         }
 
         return array_unique($names);
     }
+
 
     /**
      * @return array|boolean
@@ -134,64 +148,5 @@ class FolderBuilders
         return false;
     }
 
-    /**
-     * @return null|string
-     */
-    protected function getItemsDirectory()
-    {
-        if ($this->itemsDirectory == null) {
-            $this->initItemsDirectory();
-        }
 
-        return $this->itemsDirectory;
-    }
-
-    /**
-     * @param $dir
-     */
-    protected function setItemsDirectory($dir)
-    {
-        $this->itemsDirectory = $dir;
-    }
-
-    protected function initItemsDirectory()
-    {
-        $this->setItemsDirectory($this->generateItemsDirectory());
-    }
-
-    /**
-     * @return string
-     */
-    protected function generateItemsDirectory()
-    {
-        $methodName = 'get' . $this->definition->getName() . 'ItemsDirectory';
-        if (method_exists($this->manager, $methodName)) {
-            return $this->manager->$methodName();
-        }
-
-        $methodName = 'get' . Str::plural($this->definition->getName()) . 'Directory';
-        if (method_exists($this->manager, $methodName)) {
-            return $this->manager->$methodName();
-        }
-
-        return $this->generateManagerDirectory() . DIRECTORY_SEPARATOR . $this->generatePropertyDirectory();
-    }
-
-    /**
-     * @return string
-     */
-    protected function generateManagerDirectory()
-    {
-        $reflector = new \ReflectionObject($this->manager);
-
-        return dirname($reflector->getFileName());
-    }
-
-    /**
-     * @return string
-     */
-    protected function generatePropertyDirectory()
-    {
-        return $this->definition->getLabel();
-    }
 }

@@ -2,7 +2,7 @@
 
 namespace ByTIC\Models\SmartProperties\Definitions;
 
-use ByTIC\Models\SmartProperties\Exceptions\InvalidArgumentException;
+use ByTIC\Models\SmartProperties\Definitions\Builders\RepositoryBuilder;
 use Nip\Utility\Traits\SingletonTrait;
 
 /**
@@ -14,89 +14,22 @@ class DefinitionRegistry
     use SingletonTrait;
 
     /**
-     * @var Definition[]
+     * @var RepositoryDefinitions[]
      */
-    protected $builders = [];
-
-    /**
-     * @var []
-     */
-    protected $definitionsBuilt = [];
-
-    /**
-     * @var Definition[]
-     */
-    protected $definitions = [];
-
-    public function has($manager, string $definitionName): bool
-    {
-        $managerName = $this->managerName($manager);
-
-        if (!isset($this->definitions[$managerName][$definitionName])) {
-            return false;
-        }
-
-        return true;
-    }
+    protected array $definitions = [];
 
     /**
      * @param $manager
-     * @param string $definitionName
-     * @return mixed
+     * @param \Closure|null $builder
+     * @return RepositoryDefinitions
      */
-    public function get($manager, string $definitionName)
+    public function get($manager, \Closure $builder = null)
     {
         $managerName = $this->managerName($manager);
-
-        if (!isset($this->definitions[$managerName][$definitionName])) {
-            throw new InvalidArgumentException(sprintf(
-                'Unable to find a definition "%s" for class "%s".',
-                $definitionName, $managerName
-            ));
-        }
-
-        return $this->definitions[$managerName][$definitionName];
-    }
-
-    /**
-     * @param $manager
-     * @return mixed
-     */
-    public function getAll($manager)
-    {
-        $managerName = $this->managerName($manager);
-
         if (!isset($this->definitions[$managerName])) {
-            return [];
+            $this->definitions[$managerName] = RepositoryBuilder::for($manager, $builder);
         }
-
         return $this->definitions[$managerName];
-    }
-
-    /**
-     * @param object $manager
-     * @param $definition
-     */
-    public function set(object $manager, $definition)
-    {
-        $managerName = $this->managerName($manager);
-        $definitionName = $this->definitionName($definition);
-
-        $this->definitions[$managerName][$definitionName] = $definition;
-    }
-
-    /**
-     * @param object $manager
-     * @param \Closure $callback
-     */
-    public function checkDefinitionToBuild(object $manager, \Closure $callback)
-    {
-        $managerName = $this->managerName($manager);
-        if (isset($this->definitionsBuilt[$managerName])) {
-            return;
-        }
-        $callback();
-        $this->definitionsBuilt[$managerName] = true;
     }
 
     /**
@@ -109,17 +42,5 @@ class DefinitionRegistry
             return get_class($manager);
         }
         return (string)$manager;
-    }
-
-    /**
-     * @param object|string $definition
-     * @return string
-     */
-    protected function definitionName($definition): string
-    {
-        if ($definition instanceof Definition) {
-            return $definition->getName();
-        }
-        return (string)$definition;
     }
 }

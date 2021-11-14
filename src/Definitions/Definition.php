@@ -2,10 +2,7 @@
 
 namespace ByTIC\Models\SmartProperties\Definitions;
 
-use ByTIC\Models\SmartProperties\Properties\AbstractProperty\Generic;
-use ByTIC\Models\SmartProperties\Properties\AbstractProperty\Generic as Property;
 use ByTIC\Models\SmartProperties\RecordsTraits\HasSmartProperties\RecordsTrait;
-use Exception;
 use Nip\Records\RecordManager;
 
 /**
@@ -14,15 +11,17 @@ use Nip\Records\RecordManager;
  */
 class Definition implements \Serializable
 {
-    use Traits\HasName;
-    use Traits\HasPlaces;
-    use Traits\Serializable;
+    use Definition\CanBuild;
+    use Definition\HasName;
+    use Definition\HasPlaces;
+    use Definition\HasProperties;
+    use Definition\HasPropertiesNamespaces;
+    use Definition\Serializable;
 
     /**
      * @var RecordManager|RecordsTrait
      */
     protected $manager;
-
 
     /**
      * @var string
@@ -34,54 +33,7 @@ class Definition implements \Serializable
      */
     protected $field;
 
-    protected $items = null;
-    protected $itemsAliases = [];
-
     protected $defaultValue = null;
-
-    /**
-     * @param $name
-     *
-     * @return Property
-     * @throws Exception
-     */
-    public function getItem($name): Property
-    {
-        $items = $this->getItems();
-        if (!$this->hasItem($name)) {
-            throw new Exception(
-                'Bad Item [' . $name . '] for smart property 
-                [' . $this->getManager()->getController() . '::' . $this->getName() . ']
-                [' . implode(',', array_keys($items)) . ']'
-            );
-        }
-        if (isset($this->itemsAliases[$name])) {
-            $name = $this->itemsAliases[$name];
-        }
-        return $items[$name];
-    }
-
-    /**
-     * @return null|Property[]
-     */
-    public function getItems(): ?array
-    {
-        if ($this->items == null) {
-            $this->initItems();
-        }
-
-        return $this->items;
-    }
-
-    public function initItems()
-    {
-        $names = $this->getPlaces();
-        $this->items = [];
-        foreach ($names as $name) {
-            $object = $this->newProperty($name);
-            $this->addItem($object);
-        }
-    }
 
     /**
      * @return string|null
@@ -141,34 +93,6 @@ class Definition implements \Serializable
         $this->setLabel($name);
     }
 
-    /**
-     * @param string $type
-     *
-     * @return Property
-     */
-    public function newProperty($type = null): Property
-    {
-        $className = $this->getPropertyClass($type);
-        $object = new $className();
-        /** @var Property $object */
-        $object->setManager($this->getManager());
-        $object->setField($this->getField());
-        $object->setNamespace($this->getPropertyItemsRootNamespace());
-        return $object;
-    }
-
-    /**
-     * @param null $type
-     *
-     * @return string
-     */
-    public function getPropertyClass($type = null): string
-    {
-        $type = $type ?: $this->getDefaultValue();
-        $type = str_replace(DIRECTORY_SEPARATOR, '\\', $type);
-
-        return $this->getPropertyItemsRootNamespace() . inflector()->classify($type);
-    }
 
     /**
      * @return string
@@ -190,17 +114,6 @@ class Definition implements \Serializable
         $this->defaultValue = $defaultValue;
     }
 
-    /**
-     * @param Generic $object
-     */
-    protected function addItem(Property $object)
-    {
-        $this->items[$object->getName()] = $object;
-        $aliases = $object->getAliases();
-        foreach ($aliases as $alias) {
-            $this->itemsAliases[$alias] = $object->getName();
-        }
-    }
 
     protected function initDefaultValue()
     {
@@ -227,35 +140,6 @@ class Definition implements \Serializable
         return false;
     }
 
-    /**
-     * @param $name
-     * @return bool
-     */
-    public function hasItem($name): bool
-    {
-        $items = $this->getItems();
-
-        return isset($items[$name]) || isset($this->itemsAliases[$name]);
-    }
-
-    /**
-     * @return string
-     */
-    protected function getPropertyItemsRootNamespace(): string
-    {
-        $manager = $this->getManager();
-        $method = 'get' . $this->getName() . 'ItemsRootNamespace';
-        if (method_exists($manager, $method)) {
-            return $manager->{$method}();
-        }
-
-        $method = 'get' . $this->getName() . 'Namespace';
-        if (method_exists($manager, $method)) {
-            return $manager->{$method}();
-        }
-
-        return $manager->getModelNamespace() . $this->getLabel() . '\\';
-    }
 
     /**
      * @param $name

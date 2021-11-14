@@ -1,6 +1,6 @@
 <?php
 
-namespace ByTIC\Models\SmartProperties\Definitions\Traits;
+namespace ByTIC\Models\SmartProperties\Definitions\Definition;
 
 /**
  * Trait HasName

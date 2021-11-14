@@ -19,4 +19,18 @@ class HasPlacesTest extends AbstractTest
         $definition->setPlaces($places);
         self::assertSame($places, $definition->getPlaces());
     }
+
+    public function test_addPlaces()
+    {
+        $definition = new Definition();
+
+        $places = ['pending', 'active'];
+        $definition->addPlace(...$places);
+        $definition->addPlace('active');
+        self::assertSame($places, $definition->getPlaces());
+
+        $definition->addPlace('canceled');
+        $places[] = 'canceled';
+        self::assertSame($places, $definition->getPlaces());
+    }
 }

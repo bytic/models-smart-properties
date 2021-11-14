@@ -4,8 +4,9 @@ namespace ByTIC\Models\SmartProperties\RecordsTraits\HasSmartProperties;
 
 use ByTIC\Models\SmartProperties\Definitions\Builders\FolderBuilders;
 use ByTIC\Models\SmartProperties\Definitions\DefinitionRegistry;
+use ByTIC\Models\SmartProperties\Definitions\RepositoryDefinitions;
 use ByTIC\Models\SmartProperties\Properties\AbstractProperty\Generic as PropertyValue;
-use ByTIC\Models\SmartProperties\Properties\Definitions\Definition;
+use ByTIC\Models\SmartProperties\Definitions\Definition;
 use Exception;
 
 /**
@@ -19,11 +20,9 @@ trait RecordsTrait
     /**
      * @return array
      */
-    public function getSmartPropertiesDefinitions()
+    public function getSmartPropertiesDefinitions(): array
     {
-        $this->checkSmartPropertiesDefinitions();
-
-        return $this->getSmartPropertyDefinitionRegistry()->getAll($this);
+        return $this->getSmartPropertyDefinitionRegistry()->all();
     }
 
     /**
@@ -34,10 +33,7 @@ trait RecordsTrait
     public function getSmartPropertyItems($name)
     {
         $definition = $this->getSmartPropertyDefinition($name);
-        if ($definition) {
-            return $definition->getItems();
-        }
-        throw new Exception('invalid smart property [' . $name . ']');
+        return $definition->getItems();
     }
 
     /**
@@ -46,37 +42,27 @@ trait RecordsTrait
      */
     public function getSmartPropertyDefinition($name)
     {
-        if (!$this->hasSmartPropertyDefinition($name)) {
-            return null;
-        }
-
-        return $this->getSmartPropertyDefinitionRegistry()->get($this, $name);
+        return $this->getSmartPropertyDefinitionRegistry()->get($name);
     }
 
     /**
      * @param string $name
      * @return bool
      */
-    public function hasSmartPropertyDefinition($name)
+    public function hasSmartPropertyDefinition($name): bool
     {
-        $this->checkSmartPropertiesDefinitions();
-
-        return $this->getSmartPropertyDefinitionRegistry()->has($this, $name);
+        return $this->getSmartPropertyDefinitionRegistry()->has($name);
     }
 
     /**
      * @param $name
      * @param $field
      * @return \ByTIC\Models\SmartProperties\Properties\AbstractProperty\Generic[]|null
-     * @throws Exception
      */
     public function getSmartPropertyValues($name, $field)
     {
         $definition = $this->getSmartPropertyDefinition($name);
-        if ($definition) {
-            return $definition->getValues($field);
-        }
-        throw new Exception('invalid smart property [' . $name . ']');
+        return $definition->getValues($field);
     }
 
     /**
@@ -88,18 +74,9 @@ trait RecordsTrait
     public function getSmartPropertyItem($property, $value)
     {
         $definition = $this->getSmartPropertyDefinition($property);
-        if ($definition) {
-            return $definition->getItem($value);
-        }
-        throw new Exception('invalid smart property [' . $property . ']');
+        return $definition->getItem($value);
     }
 
-    protected function checkSmartPropertiesDefinitions()
-    {
-        $this->getSmartPropertyDefinitionRegistry()->checkDefinitionToBuild($this, function () {
-            $this->registerSmartProperties();
-        });
-    }
 
     abstract protected function registerSmartProperties();
 
@@ -118,14 +95,16 @@ trait RecordsTrait
      */
     protected function addSmartPropertyDefinition($definition)
     {
-        $this->getSmartPropertyDefinitionRegistry()->set($this, $definition);
+        $this->getSmartPropertyDefinitionRegistry()->add($definition);
     }
 
     /**
-     * @return DefinitionRegistry
+     * @return RepositoryDefinitions
      */
-    protected function getSmartPropertyDefinitionRegistry(): DefinitionRegistry
+    protected function getSmartPropertyDefinitionRegistry(): RepositoryDefinitions
     {
-        return DefinitionRegistry::instance();
+        return DefinitionRegistry::instance()->get($this, function () {
+            $this->registerSmartProperties();
+        });
     }
 }

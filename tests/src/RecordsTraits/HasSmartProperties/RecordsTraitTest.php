@@ -24,7 +24,7 @@ class RecordsTraitTest extends AbstractTest
     public function testGetSmartPropertiesDefinitions()
     {
         $definitions = $this->object->getSmartPropertiesDefinitions();
-        self::assertCount(2, $definitions);
+        self::assertCount(3, $definitions);
     }
 
     public function testGetSmartPropertyDefinition()
@@ -55,6 +55,11 @@ class RecordsTraitTest extends AbstractTest
         self::assertCount(4, $statuses);
         self::assertInstanceOf(FreeConfirmed::class, $statuses['free_confirmed']);
         self::assertInstanceOf(Unpaid::class, $statuses['unpaid']);
+
+        $statuses = $this->object->getSmartPropertyItems('MultiStatus');
+        self::assertCount(6, $statuses);
+        self::assertInstanceOf(FreeConfirmed::class, $statuses['free_confirmed']);
+        self::assertInstanceOf(Allocated::class, $statuses['allocated']);
     }
 
     public function testGetSmartPropertyValues()
