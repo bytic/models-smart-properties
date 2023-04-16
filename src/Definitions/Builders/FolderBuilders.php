@@ -101,8 +101,10 @@ class FolderBuilders
             if ($this->isAbstractItemName($name)) {
                 continue;
             }
-            $class = $namespace . '' . $name;
-            $names[$name] = PropertiesFactory::forDefinition($this->definition, $class, $namespace);
+            $class = str_replace('/', '\\', $namespace . '' . $name);
+            if (class_exists($class)) {
+                $names[$name] = PropertiesFactory::forDefinition($this->definition, $class, $namespace);
+            }
         }
 
         return array_unique($names);

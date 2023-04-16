@@ -37,6 +37,10 @@ trait HasName
 
     protected function initName()
     {
+        $name = $this->getField();
+        if (empty($name)) {
+            return;
+        }
         $name = inflector()->classify($this->getField());
         $this->setName($name);
     }

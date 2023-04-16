@@ -89,7 +89,11 @@ class Definition implements \Serializable
 
     protected function initLabel()
     {
-        $name = inflector()->pluralize($this->getName());
+        $name = $this->getName();
+        if (empty($name)) {
+            return;
+        }
+        $name = inflector()->pluralize($name);
         $this->setLabel($name);
     }
 

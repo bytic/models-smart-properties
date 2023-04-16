@@ -50,7 +50,7 @@ class RepositoryDefinitions extends AbstractLazyCollection
      * @param $definition
      * @return bool
      */
-    public function offsetExists($key)
+    public function offsetExists($key): bool
     {
         $key = \ByTIC\Models\SmartProperties\Utility\Definition::name($key);
         return parent::offsetExists($key);
@@ -61,7 +61,7 @@ class RepositoryDefinitions extends AbstractLazyCollection
      * @param string|Definition $definition
      * @return mixed
      */
-    public function offsetGet($key)
+    public function offsetGet($key): mixed
     {
         $key = \ByTIC\Models\SmartProperties\Utility\Definition::name($key);
 
@@ -75,7 +75,7 @@ class RepositoryDefinitions extends AbstractLazyCollection
         ));
     }
 
-    public function offsetSet($key, $value)
+    public function offsetSet($key, $value): void
     {
         $key = $key ?? \ByTIC\Models\SmartProperties\Utility\Definition::name($value);
         parent::offsetSet($key, $value);

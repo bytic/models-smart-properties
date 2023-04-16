@@ -38,7 +38,7 @@ trait HasPropertiesNamespaces
         foreach ($directories as $namespace => $directory) {
             $namespace = Str::contains($namespace, '\\') ? $namespace : $rootNamespace;
             $namespace = trim($namespace, '\\');
-            $propertiesNamespaces[$namespace.'\\'] = $directory;
+            $propertiesNamespaces[$namespace . '\\'] = $directory;
         }
         return $propertiesNamespaces;
     }
@@ -48,14 +48,17 @@ trait HasPropertiesNamespaces
      */
     protected function generateItemsDirectory()
     {
-        $methodName = 'get' . $this->getName() . 'ItemsDirectory';
-        if (method_exists($this->manager, $methodName)) {
-            return $this->manager->$methodName();
-        }
+        $name = $this->getName();
+        if ($name) {
+            $methodName = 'get' . $name . 'ItemsDirectory';
+            if (method_exists($this->manager, $methodName)) {
+                return $this->manager->$methodName();
+            }
 
-        $methodName = 'get' . Str::plural($this->getName()) . 'Directory';
-        if (method_exists($this->manager, $methodName)) {
-            return $this->manager->$methodName();
+            $methodName = 'get' . Str::plural($name) . 'Directory';
+            if (method_exists($this->manager, $methodName)) {
+                return $this->manager->$methodName();
+            }
         }
 
         return $this->generateManagerDirectory() . DIRECTORY_SEPARATOR . $this->generatePropertyDirectory();
