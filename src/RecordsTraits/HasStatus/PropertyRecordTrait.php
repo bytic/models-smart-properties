@@ -18,6 +18,11 @@ trait PropertyRecordTrait
         return $this->getSmartProperty('Status');
     }
 
+    public function getStatusObject()
+    {
+        return $this->getSmartProperty('Status');
+    }
+
     /**
      * @param $value
      */
@@ -45,5 +50,15 @@ trait PropertyRecordTrait
     {
         /** @noinspection PhpUnhandledExceptionInspection */
         return $this->updateSmartProperty('Status', $status);
+    }
+
+    public function isInStatus($status): bool
+    {
+        $statusObject = $this->getStatusObject();
+        if (class_exists($status)) {
+            return $statusObject instanceof $status;
+        }
+
+        return $status->getName() == $status;
     }
 }
