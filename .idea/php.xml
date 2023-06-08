@@ -175,9 +175,17 @@
       <path value="$PROJECT_DIR$/vendor/symfony/var-dumper" />
       <path value="$PROJECT_DIR$/vendor/voku/portable-ascii" />
       <path value="$PROJECT_DIR$/vendor/container-interop/container-interop" />
+      <path value="$PROJECT_DIR$/vendor/phpcsstandards/phpcsutils" />
+      <path value="$PROJECT_DIR$/vendor/phpcsstandards/phpcsextra" />
+      <path value="$PROJECT_DIR$/vendor/bytic/package-base" />
+      <path value="$PROJECT_DIR$/vendor/dealerdirect/phpcodesniffer-composer-installer" />
+      <path value="$PROJECT_DIR$/vendor/slevomat/coding-standard" />
+      <path value="$PROJECT_DIR$/vendor/phpstan/phpdoc-parser" />
+      <path value="$PROJECT_DIR$/vendor/doctrine/deprecations" />
+      <path value="$PROJECT_DIR$/vendor/ocramius/package-versions" />
     </include_path>
   </component>
-  <component name="PhpProjectSharedConfiguration" php_language_level="7.4" />
+  <component name="PhpProjectSharedConfiguration" php_language_level="8.1" />
   <component name="PhpStanOptionsConfiguration">
     <option name="transferred" value="true" />
   </component>

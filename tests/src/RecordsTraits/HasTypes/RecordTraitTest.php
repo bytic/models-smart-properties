@@ -76,9 +76,10 @@ class RecordTraitTest extends AbstractTest
     protected function setUp(): void
     {
         parent::setUp();
-        $this->object = new RecordHasTypes();
+
+        $this->object = \Mockery::mock(RecordHasTypes::class)->makePartial();
 
         $manager = new Records();
-        $this->object->setManager($manager);
+        $this->object->shouldReceive('getManager')->andReturn($manager);
     }
 }

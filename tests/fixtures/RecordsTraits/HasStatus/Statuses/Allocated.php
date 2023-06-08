@@ -8,4 +8,5 @@ namespace ByTIC\Models\SmartProperties\Tests\Fixtures\RecordsTraits\HasStatus\St
  */
 class Allocated extends AbstractStatus
 {
+    public const NAME = 'allocated';
 }

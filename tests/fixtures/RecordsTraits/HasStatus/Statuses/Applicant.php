@@ -8,4 +8,5 @@ namespace ByTIC\Models\SmartProperties\Tests\Fixtures\RecordsTraits\HasStatus\St
  */
 class Applicant extends AbstractStatus
 {
+    public const NAME = 'applicant';
 }

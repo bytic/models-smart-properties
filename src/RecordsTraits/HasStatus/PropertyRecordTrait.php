@@ -54,11 +54,22 @@ trait PropertyRecordTrait
 
     public function isInStatus($status): bool
     {
+        $status = is_array($status) ? $status : [$status];
+        foreach ($status as $singleStatus) {
+            if ($this->isInStatusSingle($singleStatus)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    protected function isInStatusSingle($status): bool
+    {
         $statusObject = $this->getStatusObject();
         if (class_exists($status)) {
-            return $statusObject instanceof $status;
+            return ($statusObject instanceof $status);
         }
 
-        return $status->getName() == $status;
+        return $statusObject->getName() == $status;
     }
 }

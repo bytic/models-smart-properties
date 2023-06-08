@@ -2,13 +2,13 @@
 
 namespace ByTIC\Models\SmartProperties\Tests\Definitions\Traits;
 
-use ByTIC\Models\SmartProperties\Tests\Definitions\AbstractDefinitionTest;
+use ByTIC\Models\SmartProperties\Tests\Definitions\AbstractDefinitionTestCase;
 
 /**
  * Class HasPropertiesNamespacesTest
  * @package ByTIC\Models\SmartProperties\Tests\Definitions\Traits
  */
-class HasPropertiesNamespacesTest extends AbstractDefinitionTest
+class HasPropertiesNamespacesTest extends AbstractDefinitionTestCase
 {
     public function test_getPropertiesNamespaces()
     {

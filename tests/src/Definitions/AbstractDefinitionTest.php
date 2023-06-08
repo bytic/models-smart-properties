@@ -10,7 +10,7 @@ use ByTIC\Models\SmartProperties\Tests\Fixtures\RecordsTraits\HasTypes\Records;
  * Class AbstractDefinitionTest
  * @package ByTIC\Models\SmartProperties\Tests\Definitions
  */
-abstract class AbstractDefinitionTest extends AbstractTest
+abstract class AbstractDefinitionTestCase extends AbstractTest
 {
     protected function newDefinitionWithManager(): Definition
     {
