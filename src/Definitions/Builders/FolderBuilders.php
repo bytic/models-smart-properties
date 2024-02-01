@@ -66,11 +66,21 @@ class FolderBuilders
      */
     protected function buildItems()
     {
-//        $names = $this->getItemsNamesFromManager();
-
         $items = $this->getItemsFromFiles();
 
-        return $items;
+        $names = $this->getItemsNamesFromManager();
+        if (!is_array($names)) {
+            return $items;
+        }
+        $return = [];
+        foreach ($names as $name) {
+            if (isset($items[$name])) {
+                $return[$name] = $items[$name];
+                unset($items[$name]);
+            }
+        }
+
+        return array_merge($return, $items);
     }
 
 
