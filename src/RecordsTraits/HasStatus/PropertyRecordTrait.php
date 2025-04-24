@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace ByTIC\Models\SmartProperties\RecordsTraits\HasStatus;
 
@@ -18,8 +19,17 @@ trait PropertyRecordTrait
         return $this->getSmartProperty('Status');
     }
 
+    /**
+     * @return Generic|null
+     */
     public function getStatusObject()
     {
+        $status = $this->getPropertyRaw('status');
+        $property = $this->getSmartProperty('Status');
+        if ($status == $property->getName()) {
+            return $property;
+        }
+        $this->setStatus($status);
         return $this->getSmartProperty('Status');
     }
 
@@ -52,6 +62,10 @@ trait PropertyRecordTrait
         return $this->updateSmartProperty('Status', $status);
     }
 
+    /**
+     * @param $status
+     * @return bool
+     */
     public function isInStatus($status): bool
     {
         $status = is_array($status) ? $status : [$status];
@@ -63,6 +77,10 @@ trait PropertyRecordTrait
         return false;
     }
 
+    /**
+     * @param $status
+     * @return bool
+     */
     protected function isInStatusSingle($status): bool
     {
         $statusObject = $this->getStatusObject();
