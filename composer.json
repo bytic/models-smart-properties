@@ -26,7 +26,7 @@
     }
   },
   "require": {
-    "bytic/orm": "^0.9|^1.0|^2.0",
+    "bytic/orm": "^1.0|^2.0",
     "bytic/utility": "^1.0|^2.0",
     "symfony/workflow": "^5.2|^6.0|^7.0"
   },
