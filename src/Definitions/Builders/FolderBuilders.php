@@ -3,6 +3,7 @@
 namespace ByTIC\Models\SmartProperties\Definitions\Builders;
 
 use ByTIC\Models\SmartProperties\Definitions\Definition;
+use ByTIC\Models\SmartProperties\Properties\AbstractProperty\Generic;
 use ByTIC\Models\SmartProperties\Properties\PropertiesFactory;
 use Nip\Records\AbstractModels\RecordManager;
 use Nip\Utility\Str;
@@ -112,12 +113,27 @@ class FolderBuilders
                 continue;
             }
             $class = str_replace('/', '\\', $namespace . '' . $name);
-            if (class_exists($class)) {
+            if ($this->checkPropertyClass($class)) {
                 $names[$name] = PropertiesFactory::forDefinition($this->definition, $class, $namespace);
             }
         }
 
         return array_unique($names);
+    }
+
+    /**
+     * @param $class
+     * @return string|null
+     */
+    protected function checkPropertyClass($class): ?string
+    {
+        if (!class_exists($class)) {
+            return null;
+        }
+        if (!is_subclass_of($class, Generic::class)) {
+            return null;
+        }
+        return $class;
     }
 
 
@@ -159,6 +175,4 @@ class FolderBuilders
 
         return false;
     }
-
-
 }
